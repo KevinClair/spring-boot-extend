@@ -71,4 +71,15 @@ public class BaseException extends RuntimeException {
     public static BaseException getInstance(BaseExceotionEnum exceotionEnum){
         return getInstance(null, exceotionEnum);
     }
+
+    /**
+     * @Description 判断该异常类是否为自定义的异常
+     * @Author mingj
+     * @Date 2020/9/4 0:07
+     * @param t
+     * @return boolean
+     **/
+    public static boolean isBaseException(Throwable t){
+        return t == null ? false : BaseException.class.isAssignableFrom(t.getClass());
+    }
 }

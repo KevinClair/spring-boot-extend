@@ -8,7 +8,7 @@ import com.extend.common.constant.EnvironmentManager;
 /**
  * 应用名获取
  *
- * @author MingJ
+ * @author mingj
  * @date 2020/8/15
  */
 public class LogConfigurationApplicationNameProperty implements PropertyDefiner {

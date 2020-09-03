@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * 开启动态日志
  *
- * @author MingJ
+ * @author mingj
  * @date 2020/8/11
  */
 @Target({ElementType.TYPE})

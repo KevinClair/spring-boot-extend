@@ -8,7 +8,7 @@ import com.extend.common.constant.EnvironmentManager;
 /**
  * 自定义日志的一些配置信息参数
  *
- * @author MingJ
+ * @author mingj
  * @date 2020/8/14
  */
 public class LogConfigurationProperty implements PropertyDefiner {

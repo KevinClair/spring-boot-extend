@@ -23,43 +23,43 @@ import java.util.Set;
  **/
 @Slf4j
 public class DynamicLogChangeEventListener {
-  private static final String LOGGER_TAG = "logging.level.";
+    private static final String LOGGER_TAG = "logging.level.";
 
-  @Autowired
-  private LoggingSystem loggingSystem;
+    @Autowired
+    private LoggingSystem loggingSystem;
 
-  @ApolloConfig
-  private Config config;
+    @ApolloConfig
+    private Config config;
 
-  @ApolloConfigChangeListener
-  private void onChange(ConfigChangeEvent changeEvent) {
-    refreshLoggingLevels();
-  }
-
-  @PostConstruct
-  private void refreshLoggingLevels() {
-    Set<String> keyNames = config.getPropertyNames();
-    for (String key : keyNames) {
-      if (containsIgnoreCase(key, LOGGER_TAG)) {
-        String strLevel = config.getProperty(key, "info");
-        LogLevel level = LogLevel.valueOf(strLevel.toUpperCase());
-        loggingSystem.setLogLevel(key.replace(LOGGER_TAG, ""), level);
-        log.info("{}:{}", key, strLevel);
-      }
+    @ApolloConfigChangeListener
+    private void onChange(ConfigChangeEvent changeEvent) {
+        refreshLoggingLevels();
     }
-  }
 
-  private static boolean containsIgnoreCase(String str, String searchStr) {
-    if (str == null || searchStr == null) {
-      return false;
+    @PostConstruct
+    private void refreshLoggingLevels() {
+        Set<String> keyNames = config.getPropertyNames();
+        for (String key : keyNames) {
+            if (containsIgnoreCase(key, LOGGER_TAG)) {
+                String strLevel = config.getProperty(key, "info");
+                LogLevel level = LogLevel.valueOf(strLevel.toUpperCase());
+                loggingSystem.setLogLevel(key.replace(LOGGER_TAG, ""), level);
+                log.info("{}:{}", key, strLevel);
+            }
+        }
     }
-    int len = searchStr.length();
-    int max = str.length() - len;
-    for (int i = 0; i <= max; i++) {
-      if (str.regionMatches(true, i, searchStr, 0, len)) {
-        return true;
-      }
+
+    private static boolean containsIgnoreCase(String str, String searchStr) {
+        if (str == null || searchStr == null) {
+            return false;
+        }
+        int len = searchStr.length();
+        int max = str.length() - len;
+        for (int i = 0; i <= max; i++) {
+            if (str.regionMatches(true, i, searchStr, 0, len)) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
-  }
 }

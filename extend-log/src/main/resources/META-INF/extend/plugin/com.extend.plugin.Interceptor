@@ -1,0 +1,2 @@
+RocketMQ.consumer=com.extend.log.cat.mq.CatRocketMQConsumerInterceptor
+RocketMQ.producer=com.extend.log.cat.mq.CatRocketMQProducerInterceptor

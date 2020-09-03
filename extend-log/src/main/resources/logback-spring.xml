@@ -11,7 +11,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-
+    <appender name="CatAppender" class="com.dianping.cat.logback.CatLogbackAppender"></appender>
     <!--输出到文件-->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}.log</file>
@@ -33,12 +33,14 @@
         <root level="info">
             <appender-ref ref="console"/>
             <appender-ref ref="file"/>
+            <appender-ref ref="CatAppender" />
         </root>
     </springProfile>
     <springProfile name="pro,test,uat">
         <root level="error">
             <appender-ref ref="console"/>
             <appender-ref ref="file"/>
+            <appender-ref ref="CatAppender" />
         </root>
     </springProfile>
 </configuration>

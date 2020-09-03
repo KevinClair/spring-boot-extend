@@ -6,14 +6,13 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * Des
  *
- * @author MingJ
+ * @author mingj
  * @date 2020/8/14
  */
 public class EnableLogImportSelector extends ConfigurationImportSelector {
 
     @Override
     public String[] importSelect(AnnotationMetadata importingClassMetadata) {
-//        return new String[]{DynamicLogConfiguration.class.getName()};
-        return new String[]{};
+        return new String[]{DynamicLogConfiguration.class.getName()};
     }
 }
