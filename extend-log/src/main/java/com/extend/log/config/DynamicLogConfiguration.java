@@ -1,6 +1,9 @@
 package com.extend.log.config;
 
 import com.dianping.cat.servlet.CatFilter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
  * @author mingj
  * @date 2020/8/14
  */
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
 public class DynamicLogConfiguration {
 
     /**
@@ -19,10 +23,10 @@ public class DynamicLogConfiguration {
      * @param
      * @return com.extend.log.config.DynamicLogChangeEventListener
      **/
-    @Bean
-    public DynamicLogChangeEventListener dynamicLogChangeEventListener(){
-        return new DynamicLogChangeEventListener();
-    }
+//    @Bean
+//    public DynamicLogChangeEventListener dynamicLogChangeEventListener(){
+//        return new DynamicLogChangeEventListener();
+//    }
 
     /**
      * @Description cat的servlet拦截器

@@ -1,0 +1,1 @@
+mybatis.plugin=com.extend.log.cat.mybatis.CatMybatisPlugin

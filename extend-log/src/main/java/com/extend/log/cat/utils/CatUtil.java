@@ -30,7 +30,7 @@ public class CatUtil {
             //如果是其它异常，则置为异常状态
             if (transaction != null){
                 Cat.logError(exception);
-                transaction.setStatus(exception.getClass().getSimpleName());
+                transaction.setStatus(exception);
             }
         }
     }

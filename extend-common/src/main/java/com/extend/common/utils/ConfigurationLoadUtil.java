@@ -14,11 +14,11 @@ import org.springframework.util.StringUtils;
  **/
 public class ConfigurationLoadUtil {
 
-    private static Config config;
-
-    static {
-        config = ConfigService.getAppConfig();
-    }
+//    private static Config config;
+//
+//    static {
+//        config = ConfigService.getAppConfig();
+//    }
 
     /**
     *@Description 获取属性
@@ -30,7 +30,7 @@ public class ConfigurationLoadUtil {
     public static String getProperty(Environment env, String key){
         String property = env.getProperty(key);
         if (StringUtils.isEmpty(env.getProperty(key))){
-            return config.getProperty(key, "");
+            return "";
         }
         return property;
     }
