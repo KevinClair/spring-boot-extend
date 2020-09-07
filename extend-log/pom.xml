@@ -20,6 +20,10 @@
             <groupId>com.extend</groupId>
             <artifactId>extend-mybatis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.extend</groupId>
+            <artifactId>extend-dubbo</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

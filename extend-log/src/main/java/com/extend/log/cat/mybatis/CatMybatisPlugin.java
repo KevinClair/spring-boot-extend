@@ -25,13 +25,6 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-/**
- *  1.Cat-Mybatis plugin:  Rewrite on the version of Steven;
- *  2.Support DruidDataSource,PooledDataSource(mybatis Self-contained data source);
- * @author zhanzehui(west_20@163.com)
- */
-
 @Intercepts({
         @Signature(method = "query", type = Executor.class, args = {
                 MappedStatement.class, Object.class, RowBounds.class,

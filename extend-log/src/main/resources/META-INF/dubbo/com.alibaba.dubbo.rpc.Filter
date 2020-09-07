@@ -1,0 +1,2 @@
+catTransaction=com.extend.log.cat.dubbo.CatTransaction
+appNameAppendFilter=com.extend.log.cat.dubbo.AppNameAppendFilter
