@@ -11,7 +11,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    <appender name="CatAppender" class="com.dianping.cat.logback.CatLogbackAppender"></appender>
+    <appender name="CatAppender" class="com.extend.log.cat.utils.CatLogbackAppender"></appender>
     <!--输出到文件-->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${application.name}.log</file>
