@@ -44,6 +44,11 @@
             <groupId>com.dianping.cat</groupId>
             <artifactId>cat-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.unidal.framework</groupId>
+            <artifactId>foundation-service</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- 引入私服，因为 CAT 依赖并没有发到 Maven 中央仓库 -->
