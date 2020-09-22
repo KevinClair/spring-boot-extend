@@ -27,7 +27,11 @@
  * 引入`Canal`
     * 监听Mysql数据库变化并将消息投递至RocketMQ;   
     * Canal官方文档[Canal](https://github.com/alibaba/canal)
- 
+ * 引入`Cat`
+    * 引入了美团点评的分布式监控系统Cat；
+    * 在Cat提供的插件基础上做出了扩展，新增了对RocketMQ的监控拦截； 
+    * 未来还将支持Redis，MongoDB的插件支持；
+    * Cat官方文档[Cat](https://github.com/dianping/cat)
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
@@ -46,6 +50,7 @@
 * [YunaiV](https://github.com/YunaiV/Blog)
 * [RocketMQ](https://github.com/apache/rocketmq)
 * [Canal](https://github.com/alibaba/canal)
+* [Cat](https://github.com/dianping/cat)
 
 ## 关于作者
 94年萌新一枚，目前还是在持续学习阶段，欢迎大佬们多多指教。
@@ -54,9 +59,9 @@
 * 动态日志变更  **(Done)**
 * DUBBO的SPI扩展 **(已扩展实现Filter过滤器)**
 * RocketMQ模块 **(Done)**
-* 日志模块 
+* 日志模块 **(Done)**
+* 监控模块Cat **(Done)**
 * Redis模块 
-* job模块 
 * seata分布式事务
 * canal消息订阅集成 **(Done)**
 
