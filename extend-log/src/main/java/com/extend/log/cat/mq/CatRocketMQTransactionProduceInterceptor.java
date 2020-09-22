@@ -10,38 +10,35 @@ import com.extend.log.cat.utils.CatUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
+
 import java.lang.reflect.Method;
+
 /**
- * RocketMQ发送端拦截器
+ * 事务消息发送模板拦截器
  *
  * @author mingj
- * @date 2020/8/14
- */
+ * @date 2020/9/17 12:57
+ **/
 @Slf4j
-public class CatRocketMQProducerInterceptor extends Interceptor {
+public class CatRocketMQTransactionProduceInterceptor extends Interceptor {
 
-    public CatRocketMQProducerInterceptor(MethodInterceptor methodInterceptor) {
+    public CatRocketMQTransactionProduceInterceptor(MethodInterceptor methodInterceptor) {
         super(methodInterceptor);
     }
 
     @Override
     public Object intercept(Object proxy, Method method, Object[] params, MethodProxy methodProxy) throws Throwable {
         Object result = null;
-        if ("sendSyncMessage".equals(method.getName())
-                || "sendSyncQueueSelectorMessage".equals(method.getName())
-                || "sendOneWay".equals(method.getName())
-                || "sendOneWayQueueSelector".equals(method.getName())
-                || "sendAsyncMessage".equals(method.getName())
-                || "sendAsyncQueueSelectorMessage".equals(method.getName())) {
-            com.dianping.cat.message.Transaction transaction = Cat.newTransaction(CatTypeEnum.ROCKETMQ_PRODUCER.getName(), params[0].toString());
+        if ("sendMessage".equals(method.getName())) {
+            com.dianping.cat.message.Transaction transaction = Cat.newTransaction(CatTypeEnum.ROCKETMQ_TRANSACTION_PRODUCER.getName(), params[0].toString());
             // 只记录前四个的内容
-            Cat.logEvent(CatEventTypeEnum.ROCKETMQ_PRODUCER_MESSAGE.getName(), "method", Message.SUCCESS, method.getName());
+            Cat.logEvent(CatEventTypeEnum.ROCKETMQ_TRANSACTION_PRODUCER_MESSAGE.getName(), "method", Message.SUCCESS, method.getName());
             for (int i = 0; i < 4; i++) {
-                Cat.logEvent(CatEventTypeEnum.ROCKETMQ_PRODUCER_MESSAGE.getName(), method.getParameters()[i].getName(), Message.SUCCESS, JSON.toJSONString(params[i]));
+                Cat.logEvent(CatEventTypeEnum.ROCKETMQ_TRANSACTION_PRODUCER_MESSAGE.getName(), method.getParameters()[i].getName(), Message.SUCCESS, JSON.toJSONString(params[i]));
             }
             try {
                 result = super.intercept(proxy, method, params, methodProxy);
-                Cat.logEvent(CatEventTypeEnum.ROCKETMQ_PRODUCER_RESULT.getName(), "result", Message.SUCCESS, JSON.toJSONString(result));
+                Cat.logEvent(CatEventTypeEnum.ROCKETMQ_TRANSACTION_PRODUCER_RESULT.getName(), "result", Message.SUCCESS, JSON.toJSONString(result));
                 transaction.setStatus(Message.SUCCESS);
             } catch (Exception e) {
                 CatUtil.processException(e, transaction);

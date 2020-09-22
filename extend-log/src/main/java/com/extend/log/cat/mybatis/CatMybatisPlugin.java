@@ -3,6 +3,8 @@ package com.extend.log.cat.mybatis;
 import com.dianping.cat.Cat;
 import com.dianping.cat.message.Message;
 import com.dianping.cat.message.Transaction;
+import com.extend.common.constant.CatEventTypeEnum;
+import com.extend.common.constant.CatTypeEnum;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
@@ -25,6 +27,12 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * cat监控Mybatis状态
+ *
+ * @author mingj
+ * @date 2020/9/17
+ */
 @Intercepts({
         @Signature(method = "query", type = Executor.class, args = {
                 MappedStatement.class, Object.class, RowBounds.class,
@@ -41,14 +49,14 @@ public class CatMybatisPlugin implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = this.getStatement(invocation);
         String          methodName      = this.getMethodName(mappedStatement);
-        Transaction t = Cat.newTransaction("SQL", methodName);
+        Transaction t = Cat.newTransaction(CatTypeEnum.MYBATIS_REQUEST.getName(), methodName);
 
         String sql = this.getSql(invocation,mappedStatement);
         SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
-        Cat.logEvent("SQL.Method", sqlCommandType.name().toLowerCase(), Message.SUCCESS, sql);
+        Cat.logEvent(CatEventTypeEnum.MYBATIS_REQUEST_COMMANDTYPE.getName(), sqlCommandType.name().toLowerCase(), Message.SUCCESS, sql);
 
-        String url = this.getSQLDatabaseUrlByStatement(mappedStatement);
-        Cat.logEvent("SQL.Database", url);
+//        String url = this.getSQLDatabaseUrlByStatement(mappedStatement);
+//        Cat.logEvent(CatEventTypeEnum.MYBATIS_REQUEST_DATABASE.getName(), url);
 
         return doFinish(invocation,t);
     }
@@ -77,7 +85,7 @@ public class CatMybatisPlugin implements Interceptor {
         return sql;
     }
 
-    private Object doFinish(Invocation invocation,Transaction t) throws Throwable {
+    private Object doFinish(Invocation invocation, Transaction t) throws Throwable {
         Object returnObj = null;
         try {
             returnObj = invocation.proceed();
@@ -117,7 +125,7 @@ public class CatMybatisPlugin implements Interceptor {
         String url = null;
 
         if(dataSource instanceof HikariDataSource) {
-            url = ((HikariDataSource) dataSource).getJdbcUrl();
+            url = ((HikariDataSource) dataSource).getJdbcUrl().substring(0, ((HikariDataSource) dataSource).getJdbcUrl().indexOf("?"));
         }else if(dataSource instanceof PooledDataSource) {
             Field dataSource1 = dataSource.getClass().getDeclaredField("dataSource");
             dataSource1.setAccessible(true);

@@ -1,6 +1,6 @@
 package com.extend.log.config;
 
-import com.dianping.cat.servlet.CatFilter;
+import com.extend.log.cat.web.CatFilter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;

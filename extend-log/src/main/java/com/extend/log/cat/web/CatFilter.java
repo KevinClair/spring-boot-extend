@@ -10,7 +10,7 @@ import com.dianping.cat.message.Transaction;
 import com.dianping.cat.message.internal.DefaultMessageManager;
 import com.dianping.cat.message.internal.DefaultTransaction;
 import com.dianping.cat.message.spi.MessageTree;
-import com.extend.common.exception.BaseException;
+import com.extend.common.constant.CatTypeEnum;
 import org.unidal.helper.Joiners;
 
 import javax.servlet.*;
@@ -32,7 +32,7 @@ import java.util.Map;
 public class CatFilter implements Filter {
     private static Map<MessageFormat, String> s_patterns = new LinkedHashMap<MessageFormat, String>();
 
-    private List<CatFilter.Handler> m_handlers = new ArrayList<Handler>();
+    private List<Handler> m_handlers = new ArrayList<Handler>();
 
     @Override
     public void destroy() {
@@ -40,10 +40,13 @@ public class CatFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException,	ServletException {
+            throws IOException, ServletException {
         Context ctx = new Context((HttpServletRequest) request, (HttpServletResponse) response, chain, m_handlers);
-
-        ctx.handle();
+        try {
+            ctx.handle();
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
     }
 
     protected String getOriginalUrl(ServletRequest request) {
@@ -90,7 +93,7 @@ public class CatFilter implements Filter {
             }
 
             @Override
-            public void handle(Context ctx) throws IOException, ServletException {
+            public void handle(Context ctx) throws Exception {
                 HttpServletRequest req = ctx.getRequest();
                 boolean top = !Cat.getManager().hasContext();
 
@@ -98,11 +101,11 @@ public class CatFilter implements Filter {
 
                 if (top) {
                     ctx.setMode(detectMode(req));
-                    ctx.setType(CatConstants.TYPE_URL);
+                    ctx.setType(CatTypeEnum.URL.getName());
 
                     setTraceMode(req);
                 } else {
-                    ctx.setType(CatConstants.TYPE_URL_FORWARD);
+                    ctx.setType(CatTypeEnum.URL_FORWARD.getName());
                 }
 
                 ctx.handle();
@@ -145,7 +148,7 @@ public class CatFilter implements Filter {
             }
 
             @Override
-            public void handle(Context ctx) throws IOException, ServletException {
+            public void handle(Context ctx) throws Exception {
                 boolean isTraceMode = Cat.getManager().isTraceMode();
 
                 HttpServletRequest req = ctx.getRequest();
@@ -203,7 +206,7 @@ public class CatFilter implements Filter {
 
         LOG_CLIENT_PAYLOAD {
             @Override
-            public void handle(Context ctx) throws IOException, ServletException {
+            public void handle(Context ctx) throws Exception {
                 HttpServletRequest req = ctx.getRequest();
                 String type = ctx.getType();
 
@@ -254,9 +257,16 @@ public class CatFilter implements Filter {
         },
 
         LOG_SPAN {
-            private void customizeStatus(Transaction t, HttpServletRequest req) {
+            private void customizeStatus(Transaction t, HttpServletRequest req) throws Exception {
+                List<Message> children = t.getChildren();
+                for (Message child : children) {
+                    if (!child.getStatus().equals(Message.SUCCESS) && child.getName().contains("Exception")){
+                        t.setStatus(child.getStatus());
+                        return;
+//                        Cat.logError((Exception) Class.forName(child.getName()).newInstance());
+                    }
+                }
                 Object catStatus = req.getAttribute(CatConstants.CAT_STATE);
-
                 if (catStatus != null) {
                     t.setStatus(catStatus.toString());
                 } else {
@@ -302,28 +312,15 @@ public class CatFilter implements Filter {
             }
 
             @Override
-            public void handle(Context ctx) throws IOException, ServletException {
+            public void handle(Context ctx) throws Exception {
                 HttpServletRequest req = ctx.getRequest();
                 Transaction t = Cat.newTransaction(ctx.getType(), getRequestURI(req));
-
                 try {
                     ctx.handle();
                     customizeStatus(t, req);
-                } catch (ServletException e) {
-                    t.setStatus(e);
-                    Cat.logError(e);
-                    throw e;
-                } catch (IOException e) {
-                    t.setStatus(e);
-                    Cat.logError(e);
-                    throw e;
                 } catch (Throwable e) {
-                    if (BaseException.isBaseException(e)){
-                        t.setStatus(Transaction.SUCCESS);
-                    } else {
-                        t.setStatus(e);
-                        Cat.logError(e);
-                    }
+                    t.setStatus(e);
+                    Cat.logError(e);
                     throw e;
                 } finally {
                     customizeUri(t, req);
@@ -334,13 +331,13 @@ public class CatFilter implements Filter {
     }
 
     protected static interface Handler {
-        public void handle(Context ctx) throws IOException, ServletException;
+        public void handle(Context ctx) throws Exception;
     }
 
     protected static class Context {
         private FilterChain m_chain;
 
-        private List<CatFilter.Handler> m_handlers;
+        private List<Handler> m_handlers;
 
         private int m_index;
 
@@ -360,7 +357,7 @@ public class CatFilter implements Filter {
 
         private String m_type;
 
-        public Context(HttpServletRequest request, HttpServletResponse response, FilterChain chain, List<CatFilter.Handler> handlers) {
+        public Context(HttpServletRequest request, HttpServletResponse response, FilterChain chain, List<Handler> handlers) {
             m_request = request;
             m_response = response;
             m_chain = chain;
@@ -415,7 +412,7 @@ public class CatFilter implements Filter {
             m_type = type;
         }
 
-        public void handle() throws IOException, ServletException {
+        public void handle() throws Exception{
             if (m_index < m_handlers.size()) {
                 CatFilter.Handler handler = m_handlers.get(m_index++);
 
