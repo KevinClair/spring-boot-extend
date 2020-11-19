@@ -14,7 +14,7 @@ import org.springframework.context.event.ContextClosedEvent;
  **/
 public class ApplicationCloseEventListener implements ApplicationListener<ContextClosedEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationCloseEventListener.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationCloseEventListener.class);
 
     /**
      * Handle an application event.
@@ -22,7 +22,7 @@ public class ApplicationCloseEventListener implements ApplicationListener<Contex
      * @param event the event to respond to
      */
     @Override
-    public void onApplicationEvent(ContextClosedEvent event) {
-        logger.info("Application has been closed");
+    public void onApplicationEvent(final ContextClosedEvent event) {
+        log.info("Application has been closed");
     }
 }

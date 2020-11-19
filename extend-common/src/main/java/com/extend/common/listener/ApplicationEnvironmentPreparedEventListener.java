@@ -2,8 +2,6 @@ package com.extend.common.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
@@ -37,7 +35,7 @@ public class ApplicationEnvironmentPreparedEventListener implements ApplicationL
      * @param event the event to respond to
      */
     @Override
-    public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+    public void onApplicationEvent(final ApplicationEnvironmentPreparedEvent event) {
         event.getSpringApplication().setBannerMode(Banner.Mode.OFF);
         log.info(buildBannerText());
         // 设置默认的环境属性
@@ -49,12 +47,12 @@ public class ApplicationEnvironmentPreparedEventListener implements ApplicationL
     }
 
     /**
-    *@Description 获取打印信息
-    *@Param []
-    *@Author mingj
-    *@Date 2019/12/31 9:42
-    *@Return java.lang.String
-    **/
+     * @Description 获取打印信息
+     * @Param []
+     * @Author mingj
+     * @Date 2019/12/31 9:42
+     * @Return java.lang.String
+     **/
     private String buildBannerText() {
         StringBuilder bannerTextBuilder = new StringBuilder();
         bannerTextBuilder.append(LINE_SEPARATOR).append(BANNAR).append(" :: Extend-Parent ::         (v").append(getVersion()).append(")").append(LINE_SEPARATOR);
@@ -62,19 +60,19 @@ public class ApplicationEnvironmentPreparedEventListener implements ApplicationL
     }
 
     /**
-    *@Description 获取版本号
-    *@Param []
-    *@Author mingj
-    *@Date 2019/12/31 9:41
-    *@Return java.lang.String
-    **/
-    private static String getVersion(){
-        String version= null;
+     * @Description 获取版本号
+     * @Param []
+     * @Author mingj
+     * @Date 2019/12/31 9:41
+     * @Return java.lang.String
+     **/
+    private static String getVersion() {
+        String version = null;
         try {
             Properties properties = new Properties();
             properties.load(ApplicationEnvironmentPreparedEventListener.class.getResourceAsStream(PATH));
             version = properties.getProperty("version");
-        }catch (Exception e){
+        } catch (Exception e) {
         }
         return version;
     }
