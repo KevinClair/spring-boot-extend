@@ -55,6 +55,19 @@
 ## 关于作者
 94年萌新一枚，目前还是在持续学习阶段，欢迎大佬们多多指教。
 
+## 最近计划
+最近准备开始着手做一次项目的重构和升级，调整一下项目的模块以及工程架构；
+* 取消现有的注解启动的方式
+* Maven工程的代码升级，注释等修改
+* Dubbo模块
+    * 版本升级，调整到Apache Dubbo版本
+    * 取消现有的模式，采用和apache-dubbo-springboot类似的模式
+* Mybaitis模块
+    * 考虑多数据源下的事务注解的功能性，尽量向Spring原生的事务注解靠齐
+    * 正在考虑是否需要接入mybatis-plus
+* RocketMQ模块
+    * 考虑将ConsumerGroup的消费模式可配置化，而不是单一的集群模式
+
 ## 未来计划
 * 动态日志变更  **(Done)**
 * DUBBO的SPI扩展 **(已扩展实现Filter过滤器)**
@@ -64,5 +77,4 @@
 * Redis模块 
 * seata分布式事务
 * canal消息订阅集成 **(Done)**
-* 调整Mybatis组件为Mybatis-plus
 
