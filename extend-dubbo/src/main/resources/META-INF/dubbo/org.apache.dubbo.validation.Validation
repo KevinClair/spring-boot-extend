@@ -1,0 +1,1 @@
+extendValidation=com.extend.dubbo.validation.ExtendDubboClientValidation
