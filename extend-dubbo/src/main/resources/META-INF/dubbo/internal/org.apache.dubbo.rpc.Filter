@@ -1,0 +1,2 @@
+generic=com.extend.dubbo.filter.GenericFilter
+exception=com.extend.dubbo.filter.ExceptionFilter
