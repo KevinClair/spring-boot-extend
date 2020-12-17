@@ -19,9 +19,8 @@
         <lombok.version>1.18.10</lombok.version>
         <fastjson.version>1.2.58</fastjson.version>
         <commons-lang3.version>3.5</commons-lang3.version>
-        <dubbo.version>2.6.4</dubbo.version>
-        <curator-framework.version>2.12.0</curator-framework.version>
-        <netty-all.version>4.1.43.Final</netty-all.version>
+        <dubbo.version>2.7.6</dubbo.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
         <rocketmq.version>4.7.0</rocketmq.version>
         <project.version>1.0.0-SNAPSHOT</project.version>
         <mybatis.version>3.4.0</mybatis.version>
@@ -80,16 +79,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>${curator-framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty-all.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -100,9 +89,19 @@
                 <version>${fastjson.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo</artifactId>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
