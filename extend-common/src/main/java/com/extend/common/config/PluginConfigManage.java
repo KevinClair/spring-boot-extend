@@ -10,13 +10,11 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * @version 1.0
- * @ClassName PluginConfigManager
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/10/27 14:49
- **/
-public class PluginConfigManager {
+ * 插件管理器。
+ *
+ * @author KevinClair
+ */
+public class PluginConfigManage {
 
     private static final String PLUGIN_PROPERTIES_CLASSPATH = "classpath*:META-INF/extend/plugin/**";
     private static final Map<String, Properties> PLUGIN_PROPERTIES_MAP = new HashMap<>();
