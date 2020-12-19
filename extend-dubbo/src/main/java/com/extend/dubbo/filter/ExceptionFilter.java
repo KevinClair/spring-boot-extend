@@ -1,5 +1,7 @@
 package com.extend.dubbo.filter;
 
+import com.extend.common.config.MessageResourcesManage;
+import com.extend.common.constant.CommonConstant;
 import com.extend.common.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.constants.CommonConstants;
@@ -75,7 +77,9 @@ public class ExceptionFilter implements Filter, Filter.Listener {
                     return;
                 }
                 // directly throw if it's BaseException or ValidationException
-                if (exception instanceof BaseException || exception instanceof ValidationException){
+                if (exception instanceof BaseException) {
+                    String message = MessageResourcesManage.getMessage(RpcContext.getContext().getAttachment(CommonConstant.LANGUAGE), exception.getMessage());
+                    appResponse.setException(new BaseException(((BaseException) exception).getCode(), org.apache.commons.lang3.StringUtils.isBlank(message) ? exception.getMessage() : message, ((BaseException) exception).getStatus()));
                     return;
                 }
 
