@@ -1,5 +1,6 @@
 package com.extend.dubbo.validation;
 
+import com.extend.common.constant.CommonConstant;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
@@ -23,13 +24,17 @@ import javassist.bytecode.annotation.MemberValue;
 import javassist.bytecode.annotation.ShortMemberValue;
 import javassist.bytecode.annotation.StringMemberValue;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.bytecode.ClassGenerator;
 import org.apache.dubbo.common.logger.Logger;
 import org.apache.dubbo.common.logger.LoggerFactory;
 import org.apache.dubbo.common.utils.ReflectUtils;
+import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.validation.MethodValidated;
 import org.apache.dubbo.validation.Validator;
+import org.hibernate.validator.resourceloading.PlatformResourceBundleLocator;
+import org.springframework.cglib.core.Local;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintViolation;
@@ -46,7 +51,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -67,12 +74,17 @@ public class ExtendDubboClientValidator implements Validator {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ExtendDubboClientValidator(URL url) {
         this.clazz = ReflectUtils.forName(url.getServiceInterface());
+        Locale locale = null;
+        if (StringUtils.isNotBlank(RpcContext.getContext().getAttachment(CommonConstant.LANGUAGE))) {
+            String[] languageSplit = RpcContext.getContext().getAttachment(CommonConstant.LANGUAGE).split("_");
+            locale = new Locale(languageSplit[0], languageSplit[1]);
+        }
         String extendValidation = url.getParameter("extendValidation");
         ValidatorFactory factory;
         if (extendValidation != null && extendValidation.length() > 0) {
-            factory = Validation.byProvider((Class) ReflectUtils.forName(extendValidation)).configure().buildValidatorFactory();
+            factory = Objects.isNull(locale) ? Validation.byProvider((Class) ReflectUtils.forName(extendValidation)).configure().buildValidatorFactory() : Validation.byProvider((Class) ReflectUtils.forName(extendValidation)).configure().messageInterpolator(new LocalizedMessageInterpolator(new PlatformResourceBundleLocator(CommonConstant.LANGUAGE_FILES_LOCATION), locale)).buildValidatorFactory();
         } else {
-            factory = Validation.buildDefaultValidatorFactory();
+            factory = Objects.isNull(locale) ? Validation.buildDefaultValidatorFactory() : Validation.byDefaultProvider().configure().messageInterpolator(new LocalizedMessageInterpolator(new PlatformResourceBundleLocator(CommonConstant.LANGUAGE_FILES_LOCATION), locale)).buildValidatorFactory();
         }
         this.validator = factory.getValidator();
         this.methodClassMap = new ConcurrentHashMap<>();
