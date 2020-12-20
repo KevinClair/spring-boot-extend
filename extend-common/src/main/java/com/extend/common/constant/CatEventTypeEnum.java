@@ -1,11 +1,10 @@
 package com.extend.common.constant;
 
 /**
- * Cat的Event类型枚举
+ * CatEventTypeEnum。
  *
- * @author mingj
- * @date 2020/9/4 0:17
- **/
+ * @author KevinClair
+ */
 public enum CatEventTypeEnum {
     // RocketMQ消费端消息体
     ROCKETMQ_CONSUMER_MESSAGE("RocketMQ.consumer.message"),
