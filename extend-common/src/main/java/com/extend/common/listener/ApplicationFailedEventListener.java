@@ -6,12 +6,10 @@ import org.springframework.boot.context.event.ApplicationFailedEvent;
 import org.springframework.context.ApplicationListener;
 
 /**
- * @version 1.0
- * @ClassName ApplicationFailedEventListener
- * @Description 应用加载失败监听
- * @Author mingj
- * @Date 2019/12/30 17:37
- **/
+ * ApplicationFailedEventListener。
+ *
+ * @author KevinClair
+ */
 public class ApplicationFailedEventListener implements ApplicationListener<ApplicationFailedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationFailedEventListener.class);
