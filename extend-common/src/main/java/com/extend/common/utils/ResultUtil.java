@@ -8,15 +8,19 @@ import com.extend.common.exception.BaseException;
 import javax.validation.ValidationException;
 import java.sql.SQLException;
 
+/**
+ * InterceptorUtils。
+ *
+ * @author KevinClair
+ */
 public class ResultUtil {
 
     /**
-     *@Description 异常返回实体类信息
-     *@Param [t]
-     *@Author mingj
-     *@Date 2019/1/16 16:23
-     *@Return com.extend.common.reponse.base.ResultResponse<T>
-     **/
+     * 根据异常类型返回结果
+     *
+     * @param e Exception
+     * @return {{@link Result}}
+     */
     public static Result<String> response(Throwable e){
         if (e instanceof ValidationException){
             return new Result<>(e.getMessage(), e.getMessage(), BaseExceotionEnum.REQUEST_PARAM_ERROR.getCode(), BaseExceotionEnum.REQUEST_PARAM_ERROR.getStatus());
@@ -30,23 +34,23 @@ public class ResultUtil {
     }
 
     /**
-    *@Description 无数据时返回信息
-    *@Param [t]
-    *@Author mingj
-    *@Date 2019/4/2 14:24
-    *@Return com.extend.facade.response.base.ResultResponse<T>
-    **/
+     * 查询结果无数据时返回
+     *
+     * @param t   结果
+     * @param <T> 结果的类型
+     * @return {{@link Result}}
+     */
     public static <T> Result<T> withoutData(T t){
         return new Result<>(ResultEnum.REQUEST_SUCCESS_WITHOUTDATA.getMessage() , t , ResultEnum.REQUEST_SUCCESS_WITHOUTDATA.getCode() , ResultEnum.REQUEST_SUCCESS_WITHOUTDATA.getStatus());
     }
 
     /**
-    *@Description 操作成功时返回信息
-    *@Param [t]
-    *@Author mingj
-    *@Date 2019/4/2 14:24
-    *@Return com.extend.facade.response.base.ResultResponse<T>
-    **/
+     * 操作成功后返回
+     *
+     * @param t   结果
+     * @param <T> 结果的类型
+     * @return {{@link Result}}
+     */
     public static <T> Result<T> success(T t){
         return new Result<>(ResultEnum.REQUEST_SUCCESS.getMessage(), t, ResultEnum.REQUEST_SUCCESS.getCode(), ResultEnum.REQUEST_SUCCESS.getStatus());
     }
