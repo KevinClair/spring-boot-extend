@@ -45,12 +45,11 @@ public class PluginConfigManage {
     }
 
     /**
-    *@Description 获取资源配置文件
-    *@Param [fileName]
-    *@Author mingj
-    *@Date 2019/10/27 14:52
-    *@Return java.util.Set<java.lang.String>
-    **/
+     * 获取资源配置文件value集合
+     *
+     * @param  fileName 文件名称
+     * @return {{@link Set<String>}} value的集合
+     */
     public static Set<String> getPropertyValueSet(String fileName) {
         Set<String> setStr = new HashSet<>();
         Properties property = getProperty(fileName);
@@ -64,35 +63,33 @@ public class PluginConfigManage {
     }
 
     /**
-    *@Description 获取资源配置文件
-    *@Param [filName]
-    *@Author mingj
-    *@Date 2020/7/4 21:40
-    *@Return java.util.Set<java.lang.String>
-    **/
+     * 获取资源配置文件key集合
+     *
+     * @param filName 文件名
+     * @return {{@link Set<String>}} key的集合
+     */
     public static Set<String> getPropertyKeySet(String filName) {
         Properties property = getProperty(filName);
         return property != null ? property.stringPropertyNames() : new HashSet<>();
     }
 
     /**
-    *@Description 获取属性配置
-    *@Param [filName]
-    *@Author mingj
-    *@Date 2019/10/27 14:52
-    *@Return java.util.Properties
-    **/
+     * 获取属性配置
+     *
+     * @param filName 文件名
+     * @return  {{@link Properties}}
+     */
     private static Properties getProperty(String filName) {
         return PLUGIN_PROPERTIES_MAP.get(filName);
     }
 
     /**
-    *@Description 获取属性配置
-    *@Param [fileName, key]
-    *@Author mingj
-    *@Date 2020/7/4 21:43
-    *@Return java.lang.String
-    **/
+     *  获取拦截器的属性配置
+     *
+     * @param fileName            文件名
+     * @param interceptorKeyName  拦截器key
+     * @return {{@link String}}
+     */
     public static String getProperty(String fileName, String interceptorKeyName) {
         Properties properties = getProperty(fileName);
         if (properties != null) {
