@@ -1,12 +1,12 @@
 package com.extend.mybatis.config;
 
+import com.extend.common.config.PluginConfigManage;
 import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.exception.BaseExceotionEnum;
 import com.extend.common.exception.BaseException;
 import com.extend.common.utils.ConfigurationLoadUtil;
 import com.extend.mybatis.properties.MyBatisConfigurationProperties;
 import com.extend.mybatis.utils.MyBatisConfigurationLoadUtil;
-import com.extend.common.config.PluginConfigManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.plugin.Interceptor;
@@ -189,7 +189,7 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
         }
         beanDefinitionBuilder.addPropertyReference("dataSource", dataSourceName);
         List<Interceptor> mybatisInterceptors = new ArrayList<>();
-        Set<String> mybatisPlugins = PluginConfigManager.getPropertyValueSet("org.apache.ibatis.plugin.Interceptor");
+        Set<String> mybatisPlugins = PluginConfigManage.getPropertyValueSet("org.apache.ibatis.plugin.Interceptor");
         mybatisPlugins.forEach(mybatisPlugin -> {
             try {
                 Class pluginClass = Class.forName(mybatisPlugin);
