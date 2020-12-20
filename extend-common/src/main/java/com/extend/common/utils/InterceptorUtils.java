@@ -1,6 +1,6 @@
 package com.extend.common.utils;
 
-import com.extend.common.config.PluginConfigManager;
+import com.extend.common.config.PluginConfigManage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
@@ -8,24 +8,26 @@ import org.springframework.cglib.proxy.MethodInterceptor;
 import java.lang.reflect.Constructor;
 
 /**
- * @version 1.0
- * @ClassName 生成拦截类
- * @Description TODO描述
- * @Author mingj
- * @Date 2020/7/4 21:25
- **/
+ * InterceptorUtils。
+ *
+ * @author KevinClair
+ */
 public class InterceptorUtils {
 
     private static final String INTERCEPTOR_FILE_NAME = "com.extend.plugin.Interceptor";
 
 
     /**
-     * @Description 有参构造函数生成代理对象
-     * @Param [cla, argumentTypes, arguments, interceptorKeyName]
-     * @Author mingj
-     * @Date 2020/7/4 21:26
-     * @Return T
-     **/
+     * 有参构造函数生成代理对象
+     *
+     * @param cla                被代理类的class
+     * @param argumentTypes      参数类型
+     * @param arguments          参数
+     * @param interceptorKeyName 拦截器key
+     * @param <T>                泛型
+     * @return 被代理之后的类
+     * @throws Exception
+     */
     public static <T> T getProxyClass(Class<T> cla, Class[] argumentTypes, Object[] arguments, String interceptorKeyName) throws Exception {
         Interceptor interceptor = getInterceptor(interceptorKeyName);
         if (interceptor == null){
@@ -40,12 +42,14 @@ public class InterceptorUtils {
     }
 
     /**
-     * @Description 无参构造函数生成代理对象
-     * @Param [cla, typePrefix]
-     * @Author mingj
-     * @Date 2020/7/4 21:28
-     * @Return T
-     **/
+     * 无参构造函数生成代理对象
+     *
+     * @param cla                被代理类的class
+     * @param interceptorKeyName 拦截器key
+     * @param <T>                泛型
+     * @return
+     * @throws Exception
+     */
     public static <T> T getProxyClass(Class<T> cla, String interceptorKeyName) throws Exception {
         Interceptor interceptor = getInterceptor(interceptorKeyName);
         if (interceptor == null){
@@ -60,15 +64,15 @@ public class InterceptorUtils {
     }
 
     /**
-     * @Description 通过配置文件信息获取配置好的代理类
-     * @Param [typePrefix]
-     * @Author mingj
-     * @Date 2020/7/4 21:29
-     * @Return Interceptor
-     **/
+     * 从配置管理器中读取拦截器
+     *
+     * @param interceptorKeyName 拦截器key
+     * @return {{@link Interceptor}}
+     * @throws Exception
+     */
     private static Interceptor getInterceptor(String interceptorKeyName) throws Exception {
         Interceptor interceptor = new Interceptor(null);
-        String className = PluginConfigManager.getProperty(INTERCEPTOR_FILE_NAME, interceptorKeyName);
+        String className = PluginConfigManage.getProperty(INTERCEPTOR_FILE_NAME, interceptorKeyName);
         if (StringUtils.isEmpty(className)){
             return null;
         }
