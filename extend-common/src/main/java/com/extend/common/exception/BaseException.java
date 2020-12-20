@@ -3,12 +3,10 @@ package com.extend.common.exception;
 import java.text.MessageFormat;
 
 /**
- * @version 1.0
- * @ClassName BaseException
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/10/20 22:55
- **/
+ * BaseException。
+ *
+ * @author KevinClair
+ */
 public class BaseException extends RuntimeException {
 
     private static final long serialVersionUID = -8391393062479120200L;
@@ -73,12 +71,11 @@ public class BaseException extends RuntimeException {
     }
 
     /**
-     * @Description 判断该异常类是否为自定义的异常
-     * @Author mingj
-     * @Date 2020/9/4 0:07
-     * @param t
+     * 判断异常是否为BaseException
+     *
+     * @param t 异常
      * @return boolean
-     **/
+     */
     public static boolean isBaseException(Throwable t){
         return t == null ? false : BaseException.class.isAssignableFrom(t.getClass());
     }
