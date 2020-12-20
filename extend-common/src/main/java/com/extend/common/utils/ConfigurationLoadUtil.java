@@ -6,12 +6,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
 /**
- * @version 1.0
- * @ClassName ApplicationConfigurationLoadUtil
- * @Description 应用配置加载工具类，优先读取本地配置文件，后读取apollo配置中心属性
- * @Author mingj
- * @Date 2019/11/30 17:02
- **/
+ * ConfigurationLoadUtil 配置加载器。
+ *
+ * @author KevinClair
+ */
 public class ConfigurationLoadUtil {
 
 //    private static Config config;
@@ -21,12 +19,12 @@ public class ConfigurationLoadUtil {
 //    }
 
     /**
-    *@Description 获取属性
-    *@Param [env, key]
-    *@Author mingj
-    *@Date 2019/11/30 22:00
-    *@Return java.lang.String
-    **/
+     *  属性配置读取
+     *
+     * @param env 环境信息
+     * @param key 属性key
+     * @return {{@link String}}
+     */
     public static String getProperty(Environment env, String key){
         String property = env.getProperty(key);
         if (StringUtils.isEmpty(env.getProperty(key))){
@@ -37,12 +35,13 @@ public class ConfigurationLoadUtil {
 
 
     /**
-     *@Description 获取属性
-     *@Param [env, key]
-     *@Author mingj
-     *@Date 2019/11/30 22:00
-     *@Return java.lang.String
-     **/
+     * 属性配置读取
+     *
+     * @param env            环境信息
+     * @param keyPlaceholder 属性key
+     * @param index          标记
+     * @return {{@link String}}
+     */
     public static String getProperty(Environment env, String keyPlaceholder, int index){
         String key = String.format(keyPlaceholder, index);
         return getProperty(env, key);
