@@ -6,12 +6,10 @@ import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 
 /**
- * @version 1.0
- * @ClassName ApplicationStartedEventListener
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/12/30 17:39
- **/
+ * ApplicationStartedEventListener。
+ *
+ * @author KevinClair
+ */
 public class ApplicationStartedEventListener implements ApplicationListener<ApplicationStartedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationStartedEventListener.class);
