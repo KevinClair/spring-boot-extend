@@ -1,11 +1,10 @@
 package com.extend.common.constant;
 
 /**
- * Cat的Transaction类型枚举
+ * CatTypeEnum。
  *
- * @author mingj
- * @date 2020/9/4 0:17
- **/
+ * @author KevinClair
+ */
 public enum CatTypeEnum {
     // RocketMQ消费端
     ROCKETMQ_CONSUMER("RocketMQ.consumer"),
