@@ -6,12 +6,10 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 
 /**
- * @version 1.0
- * @ClassName ApplicationCloseEventListener
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/12/31 15:58
- **/
+ * ApplicationCloseEventListener。
+ *
+ * @author KevinClair
+ */
 public class ApplicationCloseEventListener implements ApplicationListener<ContextClosedEvent> {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationCloseEventListener.class);
