@@ -10,12 +10,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import java.util.Properties;
 
 /**
- * @version 1.0
- * @ClassName ApplicationEnvironmentPreparedEventListener
- * @Description bannar信息
- * @Author mingj
- * @Date 2019/12/31 9:23
- **/
+ * ApplicationEnvironmentPreparedEventListener。
+ *
+ * @author KevinClair
+ */
 @Slf4j
 public class ApplicationEnvironmentPreparedEventListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
@@ -46,26 +44,12 @@ public class ApplicationEnvironmentPreparedEventListener implements ApplicationL
         }
     }
 
-    /**
-     * @Description 获取打印信息
-     * @Param []
-     * @Author mingj
-     * @Date 2019/12/31 9:42
-     * @Return java.lang.String
-     **/
     private String buildBannerText() {
         StringBuilder bannerTextBuilder = new StringBuilder();
         bannerTextBuilder.append(LINE_SEPARATOR).append(BANNAR).append(" :: Extend-Parent ::         (v").append(getVersion()).append(")").append(LINE_SEPARATOR);
         return bannerTextBuilder.toString();
     }
 
-    /**
-     * @Description 获取版本号
-     * @Param []
-     * @Author mingj
-     * @Date 2019/12/31 9:41
-     * @Return java.lang.String
-     **/
     private static String getVersion() {
         String version = null;
         try {
