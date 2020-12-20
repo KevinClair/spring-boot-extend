@@ -5,15 +5,11 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.StringUtils;
 
 /**
- * @version 1.0
- * @ClassName ConfigurationImportSelector
- * @Description 配置功能选择器
- * @Author mingj
- * @Date 2019/9/22 23:02
- **/
+ * ConfigurationImportSelector.
+ *
+ * @author KevinClair
+ */
 public abstract class ConfigurationImportSelector implements ImportSelector {
-
-    //统一的开启配置的选择器
 
     @Override
     public String[] selectImports(AnnotationMetadata annotationMetadata) {
@@ -33,7 +29,6 @@ public abstract class ConfigurationImportSelector implements ImportSelector {
     enum EnableType {
         ENABLE_MYBATIS_CONFIGURATION("EnableMyBatisImportSelector", "EnableMyBatisConfiguration"),
         ENABLE_MONGODB_CONFIGURATION("EnableMongoDbImportSelector","EnableMongoDbConfiguration"),
-        ENABLE_DUBBO_CONFIGURATION("EnableDubboImportSelector","EnableDubboConfiguration"),
         ENABLE_ROCKETMQ_CONFIGURATION("EnableRocketMQImportSelector", "EnableRocketMQ"),
         ENABLE_ROCKETMQ_TRANSACTION_CONFIGURATION("EnableRocketMQTransactionImportSelector", "EnableRocketMQTransaction"),
         ENABLE_LOG_CONFIGURATION("EnableLogImportSelector", "EnableLog");
@@ -66,14 +61,14 @@ public abstract class ConfigurationImportSelector implements ImportSelector {
             return null;
         }
     }
-    
+
+
     /**
-    *@Description 判断是否被选中
-    *@Param [enableType]
-    *@Author mingj
-    *@Date 2019/9/22 23:05
-    *@Return boolean
-    **/
+     *  判断选择的注解类型是否被选中
+     *
+     * @param enableType 开启的注解类型
+     * @return boolean
+     */
     private boolean isEnable(EnableType enableType) {
         try {
             return StringUtils.isEmpty(System.getProperty(enableType.getParam())) || Boolean.parseBoolean(System.getProperty(enableType.getParam()));
