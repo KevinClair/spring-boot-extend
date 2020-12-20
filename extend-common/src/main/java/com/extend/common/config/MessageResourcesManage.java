@@ -51,9 +51,9 @@ public class MessageResourcesManage {
     /**
      * 获取对应语言的message信息.
      *
-     * @param languageType
-     * @param messageKey
-     * @return
+     * @param  languageType
+     * @param  messageKey
+     * @return {{@link String}}
      */
     public static String getMessage(String languageType, String messageKey) {
         return PROPERTIES_MAP.get(languageType).getProperty(getContextInfo(messageKey));
