@@ -5,12 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @version 1.0
- * @ClassName Result
- * @Description 返回结果
- * @Author mingj
- * @Date 2019/12/22 17:57
- **/
+ * Result.
+ *
+ * @author KevinClair
+ */
 @Data
 public class Result<T> implements Serializable {
 
