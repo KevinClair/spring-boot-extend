@@ -7,12 +7,10 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.util.StringUtils;
 
 /**
- * @version 1.0
- * @ClassName ApplicationPreparedEventListener
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/12/30 17:38
- **/
+ * ApplicationPreparedEventListener。
+ *
+ * @author KevinClair
+ */
 public class ApplicationPreparedEventListener implements ApplicationListener<ApplicationPreparedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationPreparedEventListener.class);
