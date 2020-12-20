@@ -6,12 +6,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @version 1.0
- * @ClassName PageResponse
- * @Description TODO描述
- * @Author mingj
- * @Date 2019/12/22 17:54
- **/
+ * PageResponse.
+ *
+ * @author KevinClair
+ */
 @Data
 public class PageResponse<T> implements Serializable {
 
