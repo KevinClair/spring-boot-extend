@@ -1,12 +1,10 @@
 package com.extend.common.base;
 
 /**
- * @version 1.0
- * @ClassName ResultEnum
- * @Description 返回结果枚举
- * @Author mingj
- * @Date 2019/12/22 18:43
- **/
+ * ResultEnum.
+ *
+ * @author KevinClair
+ */
 public enum ResultEnum {
 
     REQUEST_SUCCESS("200", "请求或操作成功", true),
