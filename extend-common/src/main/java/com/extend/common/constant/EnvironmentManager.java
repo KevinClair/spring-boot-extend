@@ -12,12 +12,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * @version 1.0
- * @ClassName EnvironmentManager
- * @Description 环境参数配置类
- * @Author mingj
- * @Date 2019/9/28 21:43
- **/
+ * EnvironmentManager 环境参数配置。
+ *
+ * @author KevinClair
+ */
 public class EnvironmentManager {
 
     //mybatis配置
@@ -107,19 +105,6 @@ public class EnvironmentManager {
     public static final Integer MONGODB_DEFAULT_CONFIG_SERVERSELECTIONTIMEOUT = 1000 * 300;
     public static final Boolean MONGODB_DEFAULT_CONFIG_REPOSITORIESENABLED = true;
 
-    //dubbo服务配置
-    public static final String DUBBO_PROTOCOL_NAME = "dubbo.protocol.name";
-    public static final String DUBBO__PROTOCOL_PORT = "dubbo.protocol.port";
-    public static final String DUBBO_APPLICATION_LOGGER = "dubbo.application.logger";
-    public static final String DUBBO_PROVIDER_TIMEOUT = "dubbo.provider.timeout";
-    public static final String DUBBO_PROVIDER_RETRIES = "dubbo.provider.retries";
-    public static final String DUBBO_RPOVIDER_DELAY = "dubbo.provider.delay";
-    public static final String DUBBO_CONSUMER_TIMEOUT = "dubbo.consumer.timeout";
-    public static final String DUBBO_CONSUMER_RETRIES = "dubbo.consumer.retries";
-    public static final String DUBBO_REGISTRY_PROTOCOL = "dubbo.registry.protocol";
-    public static final String DUBBO_REGISTRY_ADDRESS = "dubbo.registry.address";
-    public static final String DUBBO_SCAN_PACKNAME = "dubbo.scanPackName";
-
     //应用相关信息配置
     private static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
     private static final String APP_PROPERTIES_KEY = "app.id";
@@ -157,23 +142,22 @@ public class EnvironmentManager {
     }
 
     /**
-    *@Description 设置属性
-    *@Param [key, value]
-    *@Author mingj
-    *@Date 2019/12/16 23:25
-    *@Return void
-    **/
+     *  设置属性
+     *
+     * @param key   属性key
+     * @param value 属性value
+     */
     public static void setProperty(String key, String value) {
         properties.setProperty(key, value);
     }
 
     /**
-    *@Description 获取属性
-    *@Param [key]
-    *@Author mingj
-    *@Date 2019/12/18 23:07
-    *@Return java.lang.String
-    **/
+     * 获取属性配置
+     *
+     * @param env 环境信息
+     * @param key 属性key
+     * @return {{@link String}}
+     */
     public static String getProperty(ConfigurableEnvironment env, String key) {
         String property = env.getProperty(key);
         if (!StringUtils.isEmpty(property)){
@@ -183,12 +167,13 @@ public class EnvironmentManager {
     }
 
     /**
-    *@Description 获取带默认值的属性
-    *@Param [key, defaultValue]
-    *@Author mingj
-    *@Date 2019/12/18 23:22
-    *@Return java.lang.String
-    **/
+     * 获取属性
+     *
+     * @param env          环境信息
+     * @param key          属性key
+     * @param defaultValue 默认值
+     * @return {{@link String}}
+     */
     public static String getProperty(ConfigurableEnvironment env, String key, String defaultValue) {
         String value = getProperty(env, key);
         if (StringUtils.isEmpty(value)){
@@ -198,24 +183,20 @@ public class EnvironmentManager {
     }
 
     /**
-    *@Description 获取环境变量
-    *@Param []
-    *@Author mingj
-    *@Date 2019/12/16 23:25
-    *@Return java.lang.String
-    **/
+     * 获取当前环境信息
+     *
+     * @return {{@link String}}
+     */
     private static String getEnv() {
         final String env = System.getProperty("env");
         return env == null ? "dev" : env;
     }
 
     /**
-    *@Description 获取appid信息
-    *@Param []
-    *@Author mingj
-    *@Date 2019/12/18 22:11
-    *@Return java.lang.String
-    **/
+     * 获取appid信息
+     *
+     * @return {{@link String}}
+     */
     public static String getAppid() {
         String property = System.getProperty(APP_PROPERTIES_KEY);
         return !StringUtils.isEmpty(property)?property:appid;
