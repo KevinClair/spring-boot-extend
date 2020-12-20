@@ -1,12 +1,10 @@
 package com.extend.common.exception;
 
 /**
- * @version 1.0
- * @ClassName BaseExceotionEnum
- * @Description 异常枚举类
- * @Author mingj
- * @Date 2019/12/17 22:44
- **/
+ * BaseExceotionEnum。
+ *
+ * @author KevinClair
+ */
 public enum BaseExceotionEnum {
 
     RESOURCE_LOAD_ERROR("ERR_001", "资源文件加载失败", false),
