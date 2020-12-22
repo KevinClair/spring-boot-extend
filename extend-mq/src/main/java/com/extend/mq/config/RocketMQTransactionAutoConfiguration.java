@@ -3,6 +3,7 @@ package com.extend.mq.config;
 import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.utils.InterceptorUtils;
 import com.extend.mq.template.RocketMQTransactionTemplate;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -17,25 +18,24 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
 /**
- * @version 1.0
- * @ClassName RocketMQAutoConfiguration
- * @Description MQ事务消息自动配置
- * @Author mingj
- * @Date 2020/1/31 22:13
- **/
+ * RocketMQTransactionAutoConfiguration，事务消息配置类。
+ *
+ * @author KevinClair
+ */
 @Slf4j
+@Builder
 public class RocketMQTransactionAutoConfiguration implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
 
     private ConfigurableEnvironment env;
-    public static String nameServerAddress;
-    public static int checkThreadPoolMinSize;
-    public static int checkThreadPoolMaxSize;
-    public static int sendMsgTimeOut;
-    public static int retryTimesWhenSendFailed;
-    public static int retryTimesWhenSendAsyncFailed;
-    public static int maxMessageSize;
-    public static int compressMsgBodyOverHowmuch;
-    public static boolean retryAnotherBrokerWhenNotStoreOK;
+    private String nameServerAddress;
+    private int checkThreadPoolMinSize;
+    private int checkThreadPoolMaxSize;
+    private int sendMsgTimeOut;
+    private int retryTimesWhenSendFailed;
+    private int retryTimesWhenSendAsyncFailed;
+    private int maxMessageSize;
+    private int compressMsgBodyOverHowmuch;
+    private boolean retryAnotherBrokerWhenNotStoreOK;
 
 
     @Override
