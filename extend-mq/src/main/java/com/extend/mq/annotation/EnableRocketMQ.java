@@ -6,12 +6,10 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * @version 1.0
- * @ClassName EnableRocketMQ
- * @Description TODO描述
- * @Author mingj
- * @Date 2020/1/31 22:10
- **/
+ * EnableRocketMQ，功能开启注解.
+ *
+ * @author KevinClair
+ */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
