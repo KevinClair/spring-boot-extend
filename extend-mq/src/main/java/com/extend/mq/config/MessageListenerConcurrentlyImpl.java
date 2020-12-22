@@ -17,12 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @ClassName MessageListenerConcurrentlyImpl
- * @Description MQ消息监听器
- * @Author mingj
- * @Date 2020/6/11 14:11
- **/
+ * MessageListenerConcurrentlyImpl，消息监听。
+ *
+ * @author KevinClair
+ */
 public class MessageListenerConcurrentlyImpl implements MessageListenerConcurrently {
 
     private Map<String, RocketMQConfiguration> listenerConf = new HashMap<>();
