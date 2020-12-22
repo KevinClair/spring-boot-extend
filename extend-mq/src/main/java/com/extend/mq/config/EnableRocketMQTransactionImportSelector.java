@@ -6,30 +6,28 @@ import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * @version 1.0
- * @ClassName EnableRocketMQImportSelector
- * @Description MQ选择器
- * @Author mingj
- * @Date 2020/1/31 22:11
- **/
+ * EnableRocketMQTransactionImportSelector。
+ *
+ * @author KevinClair
+ */
 public class EnableRocketMQTransactionImportSelector extends ConfigurationImportSelector {
 
     @Override
     public String[] importSelect(AnnotationMetadata importingClassMetadata) {
         AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableRocketMQTransaction.class.getName()));
 
-        RocketMQTransactionAutoConfiguration.nameServerAddress = annotationAttributes.getString("nameServerAddress");
+        RocketMQTransactionAutoConfiguration configuration = RocketMQTransactionAutoConfiguration.builder()
+                .nameServerAddress(annotationAttributes.getString("nameServerAddress"))
+                .sendMsgTimeOut(annotationAttributes.getNumber("sendMsgTimeOut"))
+                .retryTimesWhenSendFailed(annotationAttributes.getNumber("retryTimesWhenSendFailed"))
+                .retryTimesWhenSendAsyncFailed(annotationAttributes.getNumber("retryTimesWhenSendAsyncFailed"))
+                .maxMessageSize(annotationAttributes.getNumber("maxMessageSize"))
+                .compressMsgBodyOverHowmuch(annotationAttributes.getNumber("compressMsgBodyOverHowmuch"))
+                .retryAnotherBrokerWhenNotStoreOK(annotationAttributes.getBoolean("retryAnotherBrokerWhenNotStoreOK"))
+                .checkThreadPoolMaxSize(annotationAttributes.getNumber("checkThreadPoolMaxSize"))
+                .checkThreadPoolMinSize(annotationAttributes.getNumber("checkThreadPoolMinSize"))
+                .build();
 
-        RocketMQTransactionAutoConfiguration.checkThreadPoolMinSize = annotationAttributes.getNumber("checkThreadPoolMinSize");
-        RocketMQTransactionAutoConfiguration.checkThreadPoolMaxSize = annotationAttributes.getNumber("checkThreadPoolMaxSize");
-
-        RocketMQTransactionAutoConfiguration.sendMsgTimeOut = annotationAttributes.getNumber("sendMsgTimeOut");
-        RocketMQTransactionAutoConfiguration.retryTimesWhenSendFailed = annotationAttributes.getNumber("retryTimesWhenSendFailed");
-        RocketMQTransactionAutoConfiguration.retryTimesWhenSendAsyncFailed = annotationAttributes.getNumber("retryTimesWhenSendAsyncFailed");
-        RocketMQTransactionAutoConfiguration.maxMessageSize = annotationAttributes.getNumber("maxMessageSize");
-        RocketMQTransactionAutoConfiguration.compressMsgBodyOverHowmuch = annotationAttributes.getNumber("compressMsgBodyOverHowmuch");
-        RocketMQTransactionAutoConfiguration.retryAnotherBrokerWhenNotStoreOK = annotationAttributes.getBoolean("retryAnotherBrokerWhenNotStoreOK");
-
-        return new String[]{RocketMQTransactionAutoConfiguration.class.getName()};
+        return new String[]{configuration.getClass().getName()};
     }
 }
