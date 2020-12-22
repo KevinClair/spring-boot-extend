@@ -3,6 +3,7 @@ package com.extend.mq.config;
 import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.utils.InterceptorUtils;
 import com.extend.mq.template.RocketMQTemplate;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -18,27 +19,25 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
 /**
- * @version 1.0
- * @ClassName RocketMQAutoConfiguration
- * @Description MQ自动配置
- * @Author mingj
- * @Date 2020/1/31 22:13
- **/
+ * RocketMQAutoConfiguration，配置类。
+ *
+ * @author KevinClair
+ */
 @Slf4j
+@Builder
 public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
 
     private ConfigurableEnvironment env;
-    public static String nameServerAddress;
-    public static int sendMsgTimeOut;
-    public static int retryTimesWhenSendFailed;
-    public static int retryTimesWhenSendAsyncFailed;
-    public static int maxMessageSize;
-    public static int compressMsgBodyOverHowmuch;
-    public static boolean retryAnotherBrokerWhenNotStoreOK;
-    public static int threadMin;
-    public static int threadMax;
-    public static long consumeTimeOut;
-
+    private String nameServerAddress;
+    private int sendMsgTimeOut;
+    private int retryTimesWhenSendFailed;
+    private int retryTimesWhenSendAsyncFailed;
+    private int maxMessageSize;
+    private int compressMsgBodyOverHowmuch;
+    private boolean retryAnotherBrokerWhenNotStoreOK;
+    private int threadMin;
+    private int threadMax;
+    private long consumeTimeOut;
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
@@ -47,12 +46,10 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
     }
 
     /**
-    *@Description 注册RocketMQListenerInitialization
-    *@Param [registry]
-    *@Author mingj
-    *@Date 2020/1/31 22:27
-    *@Return void
-    **/
+     * 注册RocketMQListenerInitialization
+     *
+     * @param registry {{@link BeanDefinitionRegistry}}
+     */
     private void registerRocketMQListenerInitialization(BeanDefinitionRegistry registry) {
         String consumerGroup = EnvironmentManager.getProperty(env, "rocketmq.consumer.consumerGroup", EnvironmentManager.getAppid()+"ConsumerGroup");
         String nameServerAddress = EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress");
