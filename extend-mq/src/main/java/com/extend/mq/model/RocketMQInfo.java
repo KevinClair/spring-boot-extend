@@ -3,12 +3,10 @@ package com.extend.mq.model;
 import lombok.Data;
 
 /**
- * @version 1.0
- * @ClassName RocketMQInfo
- * @Description MQ信息
- * @Author mingj
- * @Date 2020/1/31 22:57
- **/
+ * RocketMQInfo.
+ *
+ * @author KevinClair
+ */
 @Data
 public class RocketMQInfo {
 
