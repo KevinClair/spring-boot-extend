@@ -5,6 +5,7 @@ import com.extend.common.exception.BaseException;
 import com.extend.common.utils.InterceptorUtils;
 import com.extend.mq.annotation.MQParam;
 import com.extend.mq.annotation.RocketMQListener;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -23,13 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @ClassName RocketMQListenerInitialization
- * @Description MQ消息监听初始化
- * @Author mingj
- * @Date 2020/1/31 22:21
- **/
+ * RocketMQListenerInitialization，初始化消息监听。
+ *
+ * @author KevinClair
+ */
 @Slf4j
+@Data
 public class RocketMQListenerInitialization implements BeanPostProcessor, ApplicationListener<ApplicationReadyEvent> {
 
     private String nameServerAddress;
@@ -40,12 +40,10 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
     private Map<String, RocketMQConfiguration> config = new HashMap<>();
 
     /**
-    *@Description 获取所有订阅的Topic并打印
-    *@Param [event]
-    *@Author mingj
-    *@Date 2020/1/31 22:27
-    *@Return void
-    **/
+     * 获取所有订阅的Topic并打印
+     *
+     * @param event {{@link ApplicationReadyEvent}}
+     */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (config.size() > 0) {
@@ -97,12 +95,13 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
     }
 
     /**
-    *@Description 在Bean初始化之前，扫描被@RocketMQListener扫描的方法，获取方法的属性；
-    *@Param [bean, beanName]
-    *@Author mingj
-    *@Date 2020/1/31 22:24
-    *@Return java.lang.Object
-    **/
+     * 在Bean初始化之前，扫描被@RocketMQListener扫描的方法，获取方法的属性；
+     *
+     * @param bean     bean类型
+     * @param beanName bean名称
+     * @return
+     * @throws BeansException
+     */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Method[] methods = bean.getClass().getMethods();
@@ -126,12 +125,15 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
     }
 
     /**
-    *@Description 读取MQ相关配置信息
-    *@Param [bean, method, topic, tags]
-    *@Author mingj
-    *@Date 2020/2/14 16:28
-    *@Return com.example.mq.config.RocketMQCnofiguration
-    **/
+     * 读取MQ相关配置信息
+     *
+     * @param bean   bean
+     * @param method 方法
+     * @param topic  订阅的topic信息
+     * @param tags   消息的tag
+     * @param consumerGroup 消费组
+     * @return {{@link RocketMQConfiguration}}
+     */
     private RocketMQConfiguration getConfig(Object bean, Method method, String topic, String tags, String consumerGroup) {
         RocketMQConfiguration configuration = new RocketMQConfiguration();
         configuration.setTopic(topic);
@@ -161,45 +163,5 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
         }
         configuration.setParams(params);
         return configuration;
-    }
-
-    public String getNameServerAddress() {
-        return nameServerAddress;
-    }
-
-    public void setNameServerAddress(String nameServerAddress) {
-        this.nameServerAddress = nameServerAddress;
-    }
-
-    public String getConsumerGroup() {
-        return consumerGroup;
-    }
-
-    public void setConsumerGroup(String consumerGroup) {
-        this.consumerGroup = consumerGroup;
-    }
-
-    public int getThreadMax() {
-        return threadMax;
-    }
-
-    public void setThreadMax(int threadMax) {
-        this.threadMax = threadMax;
-    }
-
-    public int getThreadMin() {
-        return threadMin;
-    }
-
-    public void setThreadMin(int threadMin) {
-        this.threadMin = threadMin;
-    }
-
-    public long getConsumeTimeOut() {
-        return consumeTimeOut;
-    }
-
-    public void setConsumeTimeOut(long consumeTimeOut) {
-        this.consumeTimeOut = consumeTimeOut;
     }
 }
