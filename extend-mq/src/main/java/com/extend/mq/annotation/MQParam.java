@@ -9,12 +9,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @version 1.0
- * @ClassName MQParam
- * @Description MQ消息参数
- * @Author mingj
- * @Date 2020/2/14 16:45
- **/
+ * MQParam，消息体属性映射。
+ *
+ * @author KevinClair
+ */
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MQParam {
