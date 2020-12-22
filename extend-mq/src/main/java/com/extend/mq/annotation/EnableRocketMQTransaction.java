@@ -6,12 +6,10 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * @version 1.0
- * @ClassName EnableRocketTransactionMQ
- * @Description 开启RocketMQ的事务消息
- * @Author mingj
- * @Date 2020/7/12 19:55
- **/
+ * EnableRocketMQTransaction，事务消息开启注解。
+ *
+ * @author KevinClair
+ */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
