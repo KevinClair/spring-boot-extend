@@ -3,12 +3,10 @@ package com.extend.mq.annotation;
 import java.lang.annotation.*;
 
 /**
- * @version 1.0
- * @ClassName RocketMQListener
- * @Description MQ消息监听
- * @Author mingj
- * @Date 2020/1/31 22:31
- **/
+ * RocketMQListener，消息监听。
+ *
+ * @author KevinClair
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
