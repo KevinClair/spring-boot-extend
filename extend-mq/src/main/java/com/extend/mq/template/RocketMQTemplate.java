@@ -13,12 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * @version 1.0
- * @ClassName RocketMQTemplate
- * @Description MQ消息发送模板
- * @Author mingj
- * @Date 2020/1/31 22:15
- **/
+ * RocketMQTemplate.
+ *
+ * @author KevinClair
+ */
 public class RocketMQTemplate implements DisposableBean {
 
     private static final long TIME_OUT = 3000;
@@ -50,17 +48,15 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 同步发送消息方法，同步阻塞发送，返回发送结果，但存在消息丢失，取决于刷盘方式是异步刷盘还是同步刷盘；适用于保证数据尽量不丢失的场景
+     * 同步发送消息方法，同步阻塞发送，返回发送结果，但存在消息丢失，取决于刷盘方式是异步刷盘还是同步刷盘；适用于保证数据尽量不丢失的场景
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
      * @param timeout 超时时间，默认是3000ms
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     * @return {@link SendResult}
+     */
     public SendResult sendSyncMessage(String topic, String tags, String keys, Object obj, long timeout) {
         if (StringUtils.isEmpty(topic) || Objects.isNull(obj)) {
             throw BaseException.getInstance(BaseExceotionEnum.ROCKET_MQ_SEND_MESSAGE_ERROR);
@@ -100,20 +96,17 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 同步发送消息方法，同步阻塞发送，返回发送结果，但存在消息丢失，取决于刷盘方式是异步刷盘还是同步刷盘。可以自实现MessageQueueSelector，自选队列发送消息；适用于保证数据尽量不丢失的场景
+     * 同步发送消息方法，同步阻塞发送，返回发送结果，但存在消息丢失，取决于刷盘方式是异步刷盘还是同步刷盘。可以自实现MessageQueueSelector，自选队列发送消息；适用于保证数据尽量不丢失的场景
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
-     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；
-     * @see SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择
+     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；{@link SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择}
      * @param arg 默认的消息队列选择器场景下，会通过arg的hascode和队列数量取模，在实现自定义的消息队列选择器时，此参数可以填null
      * @param timeout 超时时间，默认是3000ms
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     * @return {@link SendResult}
+     */
     private SendResult sendSyncQueueSelectorMessage(String topic, String tags, String keys, Object obj, MessageQueueSelector selector, Object arg, long timeout) {
         SendResult sendResult = null;
         try {
@@ -128,18 +121,14 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
 
-
     /**
-     * @Description 一次性发送消息方法，不会有返回结果且没有回调方法，具有消息丢失的异常情况，通常适用于日志记录等场景，不需要考虑消息丢失造成的影响；
+     * 一次性发送消息方法，不会有返回结果且没有回调方法，具有消息丢失的异常情况，通常适用于日志记录等场景，不需要考虑消息丢失造成的影响；
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     */
     public void sendOneWay(String topic, String tags, String keys, Object obj) {
         Message message = new Message(topic, tags, keys, getBytes(obj));
         try {
@@ -150,19 +139,15 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 一次性发送消息方法，不会有返回结果且没有回调方法，具有消息丢失的异常情况
+     * 一次性发送消息方法，不会有返回结果且没有回调方法，具有消息丢失的异常情况
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
-     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；
-     * @see SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择
+     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；{@link SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择}
      * @param arg 默认的消息队列选择器场景下，会通过arg的hascode和队列数量取模，在实现自定义的消息队列选择器时，此参数可以填null
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     */
     public void sendOneWayQueueSelector(String topic, String tags, String keys, Object obj, MessageQueueSelector selector, Object arg) {
         Message message = new Message(topic, tags, keys, getBytes(obj));
         try {
@@ -195,18 +180,15 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 异步发送消息方法，异步发送，不返回发送结果，同样存在消息丢失。适用于数据量大且需要保证消息尽量不丢失的场景，保证客户端不需要等待发送结果及时响应；
+     * 异步发送消息方法，异步发送，不返回发送结果，同样存在消息丢失。适用于数据量大且需要保证消息尽量不丢失的场景，保证客户端不需要等待发送结果及时响应；
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
      * @param sendCallback 发送回调方法，消息发送结束之后会由异步线程调用回调方法
      * @param timeout 超时时间，默认是3000ms
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     */
     public void sendAsyncMessage(String topic, String tags, String keys, Object obj, SendCallback sendCallback, long timeout) {
         if (StringUtils.isEmpty(topic) || Objects.isNull(obj)) {
             throw BaseException.getInstance(BaseExceotionEnum.ROCKET_MQ_SEND_MESSAGE_ERROR);
@@ -239,21 +221,17 @@ public class RocketMQTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 异步发送消息方法，异步发送，不返回发送结果，同样存在消息丢失。可以自实现MessageQueueSelector，自选队列发送消息；适用于数据量大且需要保证消息尽量不丢失的场景，保证客户端不需要等待发送结果及时响应；
+     * 异步发送消息方法，异步发送，不返回发送结果，同样存在消息丢失。可以自实现MessageQueueSelector，自选队列发送消息；适用于数据量大且需要保证消息尽量不丢失的场景，保证客户端不需要等待发送结果及时响应；
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
      * @param obj 需要发送的对象信息
-     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；
-     * @see SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择
+     * @param selector MessageQueueSelector消息队列，需要实现其中的方法，选择对应的队列发送消息，通常用于顺序消息；{@see SelectMessageQueueByHash 默认的消息队列选择器，请根据当前场景选择}
      * @param arg 默认的消息队列选择器场景下，会通过arg的hascode和队列数量取模，在实现自定义的消息队列选择器时，此参数可以填null
      * @param sendCallback 发送回调方法，消息发送结束之后会由异步线程调用回调方法
      * @param timeout 超时时间，默认是3000ms
-     * @Param [topic, tags, keys, obj]
-     * @Author mingj
-     * @Date 2020/7/8 22:53
-     * @Return java.lang.String
-     **/
+     */
     private void sendAsyncQueueSelectorMessage(String topic, String tags, String keys, Object obj, MessageQueueSelector selector, Object arg, SendCallback sendCallback, long timeout) {
         try {
             producer.send(new Message(topic, tags, keys, getBytes(obj)), selector, arg, sendCallback, timeout);
@@ -274,12 +252,8 @@ public class RocketMQTemplate implements DisposableBean {
 
 
     /**
-     * @Description 关闭producer
-     * @Param []
-     * @Author mingj
-     * @Date 2020/7/8 22:37
-     * @Return void
-     **/
+     * 销毁producer.
+     */
     @Override
     public void destroy() {
         if (producer != null) {
