@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @ClassName RocketMQCnofiguration
- * @Description TODO描述
- * @Author mingj
- * @Date 2020/2/14 16:02
- **/
+ * RocketMQConfiguration，属性配置。
+ *
+ * @author KevinClair
+ */
 public class RocketMQConfiguration {
     private String topic;
     private String tag;
