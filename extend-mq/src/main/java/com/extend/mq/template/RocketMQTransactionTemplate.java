@@ -12,12 +12,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * @version 1.0
- * @ClassName RocketMQTransactionTemokate
- * @Description MQ事务消息模板
- * @Author mingj
- * @Date 2020/7/12 20:27
- **/
+ * RocketMQTransactionTemplate.
+ *
+ * @author KevinClair
+ */
 public class RocketMQTransactionTemplate implements DisposableBean {
 
     private TransactionMQProducer producer;
@@ -35,7 +33,8 @@ public class RocketMQTransactionTemplate implements DisposableBean {
     }
 
     /**
-     * @Description 发送事务消息方法
+     * 发送事务消息方法
+     *
      * @param topic TOPIC主题信息
      * @param tags 主题的tags信息，没有可以不填，空字符串即可或者*
      * @param keys key信息，没有可以不填，空字符串即可
@@ -43,11 +42,8 @@ public class RocketMQTransactionTemplate implements DisposableBean {
      * @param transactionListener executeLocalTransaction执行本地事务的方法，需要在方法执行结束后确认是提交消息还是回滚消息！
      * @param arg transactionListener的实现方法executeLocalTransaction执行本地事务的方法的第二个参数，具体使用方法根据当前本地事务执行器决定；可以选择和发送消息的obj为同一个，也可以不选择；
      * @param transactionListener 事务消息监听器，方法checkLocalTransaction返回Unkhown或者因为网络等问题broker节点无法获取到事务消息的状态，将会调用此方法回查事务消息状态，通常是通过DB反查本地事务是否正常提交了；
-     * @Param [topic, tags, keys, obj, tranExecuter, arg, transactionCheckListener]
-     * @Author mingj
-     * @Date 2020/7/13 0:32
-     * @Return org.apache.rocketmq.client.producer.TransactionSendResult
-     **/
+     * @return {@link TransactionSendResult}
+     */
     public TransactionSendResult sendMessage(String topic, String tags, String keys, Object obj, Object arg, TransactionListener transactionListener) {
         if (StringUtils.isEmpty(topic) || Objects.isNull(obj) || Objects.isNull(transactionListener)) {
             throw BaseException.getInstance(BaseExceotionEnum.ROCKET_MQ_SEND_MESSAGE_ERROR);
