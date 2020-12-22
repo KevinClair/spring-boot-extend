@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @ClassName CanalMessageInfo
- * @Description canal消息描述
- * @Author mingj
- * @Date 2020/7/26 21:40
- **/
+ * CanalMessageInfo.
+ *
+ * @author KevinClair
+ */
 @Data
 public class CanalMessageInfo<T> {
 
