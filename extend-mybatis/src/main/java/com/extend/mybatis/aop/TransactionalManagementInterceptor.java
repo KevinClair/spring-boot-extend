@@ -1,12 +1,10 @@
 package com.extend.mybatis.aop;
 
 import com.extend.common.exception.BaseException;
-import com.extend.mybatis.annotation.TranscationalManagement;
+import com.extend.mybatis.annotation.TransactionalManagement;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -21,20 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version 1.0
- * @ClassName TransactionalManagementInterceptor
- * @Description 事务拦截器
- * @Author mingj
- * @Date 2019/10/27 12:59
- **/
+ * TransactionalManagementInterceptor.
+ *
+ * @author KevinClair
+ */
 @Aspect
 public class TransactionalManagementInterceptor implements ApplicationContextAware {
 
-    private Logger log = LoggerFactory.getLogger(TransactionalManagementInterceptor.class);
     private ApplicationContext applicationContext;
 
     @Around("@annotation(transactional)")
-    public Object interceptor(ProceedingJoinPoint jp, TranscationalManagement transactional) throws Throwable {
+    public Object interceptor(ProceedingJoinPoint jp, TransactionalManagement transactional) throws Throwable {
         Object proceed = null;
         //获取事务配置
         String[] value = transactional.value();
