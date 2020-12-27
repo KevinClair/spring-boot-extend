@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration= = com.extend.mybatis.config.MyBatisAutoConfiguration, \
+  com.extend.mybatis.aop.TransactionalManagementInterceptor
