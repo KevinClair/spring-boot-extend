@@ -13,12 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @ClassName MyBatisConfigurationLoadUtil
- * @Description Mybatis配置加载工具类
- * @Author mingj
- * @Date 2019/9/28 21:49
- **/
+ * MyBatisConfigurationLoadUtil.
+ *
+ * @author KevinClair
+ */
 public class MyBatisConfigurationLoadUtil {
 
     /**
