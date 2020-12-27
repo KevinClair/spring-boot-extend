@@ -3,12 +3,10 @@ package com.extend.mybatis.properties;
 import lombok.Data;
 
 /**
- * @version 1.0
- * @ClassName MyBatisAutoConfigurationProperties
- * @Description Mybatis自动配置属性类
- * @Author mingj
- * @Date 2019/9/22 23:29
- **/
+ * MyBatisConfigurationProperties.
+ *
+ * @author KevinClair
+ */
 @Data
 public class MyBatisConfigurationProperties {
 
