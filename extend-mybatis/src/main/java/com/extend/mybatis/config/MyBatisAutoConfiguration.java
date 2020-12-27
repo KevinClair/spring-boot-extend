@@ -9,6 +9,7 @@ import com.extend.mybatis.properties.MyBatisConfigurationProperties;
 import com.extend.mybatis.utils.MyBatisConfigurationLoadUtil;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -37,15 +38,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @version 1.0
- * @ClassName MyBatisAutoConfiguration
- * @Description Mybatis的配置类，排除spring boot的自动配置选择器
- * @Author mingj
- * @Date 2019/9/22 23:16
- **/
+ * MyBatisAutoConfiguration.
+ *
+ * @author KevinClair
+ */
+@Slf4j
 public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProcessor,EnvironmentAware {
-
-    private static final Logger logger = LoggerFactory.getLogger(MyBatisAutoConfiguration.class);
 
     private ConfigurableEnvironment env;
     private MyBatisConfigurationProperties config;
@@ -77,12 +75,8 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 初始化配置，读取mybatis的数据库配置参数
-    *@Param []
-    *@Author mingj
-    *@Date 2019/9/28 21:37
-    *@Return void
-    **/
+     * 初始化配置，读取mybatis的数据库配置参数
+     */
     private void initConfig(){
         if (!StringUtils.isEmpty(ConfigurationLoadUtil.getProperty(env, EnvironmentManager.MYBATIS_CONFIG_NAME))) {
             config = MyBatisConfigurationLoadUtil.loadSingleMyBatisConfiguration(env);
@@ -92,12 +86,11 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 注册beans
-    *@Param [config, beanFactory]
-    *@Author mingj
-    *@Date 2019/9/29 15:30
-    *@Return void
-    **/
+     * 注册beans
+     *
+     * @param config      {@link MyBatisConfigurationProperties}
+     * @param beanFactory {@link BeanDefinitionRegistry}
+     */
     private void registerBean(MyBatisConfigurationProperties config, BeanDefinitionRegistry beanFactory) {
 
         String dataSourceName = config.getName() + "DataSource";
@@ -113,12 +106,12 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 注册事务模板
-    *@Param [transactionTemplateName, beanFactory, transactionManagerName]
-    *@Author mingj
-    *@Date 2019/10/27 12:54
-    *@Return void
-    **/
+     * 注册事务模板
+     *
+     * @param transactionTemplateName 事务模板名称
+     * @param beanFactory             {@link BeanDefinitionRegistry}
+     * @param transactionManagerName  事务管理器名称
+     */
     private void registerTransactionTemplateDefinitionBuilder(String transactionTemplateName, BeanDefinitionRegistry beanFactory, String transactionManagerName) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(TransactionTemplate.class);
         beanDefinitionBuilder.addPropertyReference("transactionManager", transactionManagerName);
@@ -126,12 +119,12 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 注册事务管理器
-    *@Param [transactionManagerName, beanFactory, dataSourceName]
-    *@Author mingj
-    *@Date 2019/10/27 12:48
-    *@Return void
-    **/
+     * 注册事务管理器
+     *
+     * @param transactionManagerName 事务模板名称
+     * @param beanFactory            {@link BeanDefinitionRegistry}
+     * @param dataSourceName         数据源名称
+     */
     private void registerTransactionManagerDefinitionBuilder(String transactionManagerName, BeanDefinitionRegistry beanFactory, String dataSourceName) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(DataSourceTransactionManager.class);
         beanDefinitionBuilder.addPropertyReference("dataSource", dataSourceName);
@@ -139,12 +132,13 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 注册Mapper
-    *@Param [mapperScannerConfigurerName, beanFactory, config, sessionFactoryName]
-    *@Author mingj
-    *@Date 2019/10/27 12:15
-    *@Return void
-    **/
+     * 注册Mapper
+     *
+     * @param mapperScannerConfigurerName mapper扫面管理器
+     * @param beanFactory                 {@link BeanDefinitionRegistry}
+     * @param config                      {@link MyBatisConfigurationProperties}
+     * @param sessionFactoryName          sessionFactory
+     */
     private void registerMapperScannerDefinitionBuilder(String mapperScannerConfigurerName, BeanDefinitionRegistry beanFactory, MyBatisConfigurationProperties config, String sessionFactoryName) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(MapperScannerConfigurer.class);
         beanDefinitionBuilder.addPropertyValue("basePackage", config.getBasePackage());
@@ -169,6 +163,14 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     *@Date 2019/10/20 22:46
     *@Return void
     **/
+    /**
+     * 注册SessionFactory
+     *
+     * @param sessionFactoryName sessionFactoryName
+     * @param beanFactory        {@link BeanDefinitionRegistry}
+     * @param config             {@link MyBatisConfigurationProperties}
+     * @param dataSourceName     数据源名称
+     */
     private void registerSessionFactoryDefinitionBuilder(String sessionFactoryName, BeanDefinitionRegistry beanFactory, MyBatisConfigurationProperties config, String dataSourceName) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SqlSessionFactoryBean.class);
         beanDefinitionBuilder.addPropertyValue("mapperLocations", resolveMapperLocations(config.getMapperLocations()));
@@ -196,7 +198,7 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
                 Interceptor mybatisInterceptor = (Interceptor) pluginClass.newInstance();
                 mybatisInterceptors.add(mybatisInterceptor);
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                logger.error("load mybatis plugin error: ", e);
+                log.error("load mybatis plugin error: ", e);
             }
         });
 
@@ -206,12 +208,12 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 注册数据源
-    *@Param [dataSourceName, beanFactory, config]
-    *@Author mingj
-    *@Date 2019/9/29 15:31
-    *@Return void
-    **/
+     * 注册数据源
+     *
+     * @param dataSourceName 数据源名称
+     * @param beanFactory    {@link BeanDefinitionRegistry}
+     * @param config         {@link MyBatisConfigurationProperties}
+     */
     private void registerDataSourceBeanDefinitionBuilder(String dataSourceName, BeanDefinitionRegistry beanFactory, MyBatisConfigurationProperties config) {
         HikariConfig hikariConfig = MyBatisConfigurationLoadUtil.createDataSource(config);
         BeanDefinitionBuilder dataSourceDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(HikariDataSource.class);
@@ -220,12 +222,11 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-    *@Description 读取mapperLocations地址
-    *@Param [mapperLocations]
-    *@Author mingj
-    *@Date 2019/10/20 23:45
-    *@Return org.springframework.core.io.Resource[]
-    **/
+     * 读取mapperLocations
+     *
+     * @param mapperLocations mapper地址
+     * @return
+     */
     private Resource[] resolveMapperLocations(String mapperLocations) {
         ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
         List<Resource> resources = new ArrayList<Resource>();
