@@ -14,12 +14,10 @@ import java.lang.reflect.Field;
 import java.util.Properties;
 
 /**
- * @version 1.0
- * @ClassName ExamplePlugin
- * @Description 拦截器模板
- * @Author mingj
- * @Date 2019/11/14 21:31
- **/
+ * ExamplePlugin.
+ *
+ * @author KevinClair
+ */
 @Intercepts({
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class,  Object.class, RowBounds.class, ResultHandler.class})
 })
