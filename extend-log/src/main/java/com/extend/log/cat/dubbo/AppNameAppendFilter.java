@@ -2,8 +2,14 @@ package com.extend.log.cat.dubbo;
 
 
 import com.alibaba.dubbo.common.Constants;
-import com.alibaba.dubbo.common.extension.Activate;
-import com.alibaba.dubbo.rpc.*;
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.common.extension.Activate;
+import org.apache.dubbo.rpc.Filter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.RpcException;
 
 /**
  * 应用名过滤器
@@ -11,7 +17,7 @@ import com.alibaba.dubbo.rpc.*;
  * @author mingj
  * @date 2020/9/4
  */
-@Activate(group = {Constants.CONSUMER})
+@Activate(group = {CommonConstants.CONSUMER})
 public class AppNameAppendFilter implements Filter {
 
     @Override

@@ -23,9 +23,6 @@ public class EnableRocketMQImportSelector extends ConfigurationImportSelector {
                 .maxMessageSize(annotationAttributes.getNumber("maxMessageSize"))
                 .compressMsgBodyOverHowmuch(annotationAttributes.getNumber("compressMsgBodyOverHowmuch"))
                 .retryAnotherBrokerWhenNotStoreOK(annotationAttributes.getBoolean("retryAnotherBrokerWhenNotStoreOK"))
-                .threadMin(annotationAttributes.getNumber("consumeThreadMin"))
-                .threadMax(annotationAttributes.getNumber("consumeThreadMax"))
-                .consumeTimeOut(annotationAttributes.getNumber("consumeTimeout"))
                 .build();
         return new String[]{configuration.getClass().getName()};
     }

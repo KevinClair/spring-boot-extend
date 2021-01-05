@@ -27,7 +27,6 @@ public abstract class ConfigurationImportSelector implements ImportSelector {
      * 注解类型
      */
     enum EnableType {
-        ENABLE_MYBATIS_CONFIGURATION("EnableMyBatisImportSelector", "EnableMyBatisConfiguration"),
         ENABLE_MONGODB_CONFIGURATION("EnableMongoDbImportSelector","EnableMongoDbConfiguration"),
         ENABLE_ROCKETMQ_CONFIGURATION("EnableRocketMQImportSelector", "EnableRocketMQ"),
         ENABLE_ROCKETMQ_TRANSACTION_CONFIGURATION("EnableRocketMQTransactionImportSelector", "EnableRocketMQTransaction"),

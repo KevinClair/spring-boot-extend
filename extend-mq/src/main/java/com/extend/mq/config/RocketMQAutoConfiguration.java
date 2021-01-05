@@ -35,9 +35,19 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
     private int maxMessageSize;
     private int compressMsgBodyOverHowmuch;
     private boolean retryAnotherBrokerWhenNotStoreOK;
-    private int threadMin;
-    private int threadMax;
-    private long consumeTimeOut;
+
+    public RocketMQAutoConfiguration(ConfigurableEnvironment env, String nameServerAddress, int sendMsgTimeOut, int retryTimesWhenSendFailed, int retryTimesWhenSendAsyncFailed, int maxMessageSize, int compressMsgBodyOverHowmuch, boolean retryAnotherBrokerWhenNotStoreOK) {
+        this.nameServerAddress = nameServerAddress;
+        this.sendMsgTimeOut = sendMsgTimeOut;
+        this.retryTimesWhenSendFailed = retryTimesWhenSendFailed;
+        this.retryTimesWhenSendAsyncFailed = retryTimesWhenSendAsyncFailed;
+        this.maxMessageSize = maxMessageSize;
+        this.compressMsgBodyOverHowmuch = compressMsgBodyOverHowmuch;
+        this.retryAnotherBrokerWhenNotStoreOK = retryAnotherBrokerWhenNotStoreOK;
+    }
+
+    public RocketMQAutoConfiguration() {
+    }
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
@@ -51,24 +61,20 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
      * @param registry {{@link BeanDefinitionRegistry}}
      */
     private void registerRocketMQListenerInitialization(BeanDefinitionRegistry registry) {
-        String consumerGroup = EnvironmentManager.getProperty(env, "rocketmq.consumer.consumerGroup", EnvironmentManager.getAppid()+"ConsumerGroup");
-        String nameServerAddress = EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress");
+//        String consumerGroup = EnvironmentManager.getProperty(env, "rocketmq.consumer.consumerGroup", EnvironmentManager.getAppid()+"ConsumerGroup");
+        String defaultNameServerAddress = EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress");
 
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RocketMQListenerInitialization.class);
-        builder.addPropertyValue("nameServerAddress", nameServerAddress);
-        builder.addPropertyValue("consumerGroup", consumerGroup);
-        builder.addPropertyValue("threadMax", threadMax);
-        builder.addPropertyValue("threadMin", threadMin);
-        builder.addPropertyValue("consumeTimeOut", consumeTimeOut);
+        builder.addPropertyValue("nameServerAddress", StringUtils.isBlank(nameServerAddress) ? defaultNameServerAddress : nameServerAddress);
         registry.registerBeanDefinition("rocketMQListenerInitialization", builder.getRawBeanDefinition());
     }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         DefaultMQProducer producer = new DefaultMQProducer();
-        producer.setProducerGroup(EnvironmentManager.getProperty(env, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid()+"_PRODUCERGROUP"));
+        producer.setProducerGroup(EnvironmentManager.getProperty(env, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_PRODUCERGROUP"));
         producer.setSendMsgTimeout(sendMsgTimeOut);
-        producer.setNamesrvAddr(StringUtils.isEmpty(nameServerAddress)?EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress"):nameServerAddress);
+        producer.setNamesrvAddr(StringUtils.isBlank(nameServerAddress) ? EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress") : nameServerAddress);
         producer.setRetryTimesWhenSendFailed(retryTimesWhenSendFailed);
         producer.setRetryTimesWhenSendAsyncFailed(retryTimesWhenSendAsyncFailed);
         producer.setMaxMessageSize(maxMessageSize);
@@ -83,7 +89,7 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
         }
         RocketMQTemplate proxyClass = null;
         try {
-            proxyClass = InterceptorUtils.getProxyClass(RocketMQTemplate.class, new Class[]{DefaultMQProducer.class}, new Object[]{producer},"RocketMQ.producer");
+            proxyClass = InterceptorUtils.getProxyClass(RocketMQTemplate.class, new Class[]{DefaultMQProducer.class}, new Object[]{producer}, "RocketMQ.producer");
         } catch (Exception e) {
             log.error("RocketMQ发送端Template模板启动异常，异常信息：{}", ExceptionUtils.getStackTrace(e));
         }

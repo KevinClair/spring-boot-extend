@@ -127,8 +127,7 @@ public class CatFilter implements Filter {
             private String getCatServer() {
                 if (m_servers == null) {
                     DefaultMessageManager manager = (DefaultMessageManager) Cat.getManager();
-                    List<Server> servers = manager.getConfigManager().getServers();
-
+                    List<Server> servers = manager.getConfigService().getServers();
                     m_servers = Joiners.by(',').join(servers, new Joiners.IBuilder<Server>() {
                         @Override
                         public String asString(Server server) {

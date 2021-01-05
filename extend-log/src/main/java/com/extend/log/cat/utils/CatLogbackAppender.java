@@ -6,6 +6,7 @@ import ch.qos.logback.classic.spi.ThrowableProxy;
 import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.core.LogbackException;
 import com.dianping.cat.Cat;
+import com.dianping.cat.message.Trace;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -57,7 +58,8 @@ public class CatLogbackAppender extends AppenderBase<ILoggingEvent> {
 			data = data + '\n' + buildExceptionStack(info.getThrowable());
 		}
 
-		Cat.logTrace(type, name, "0", data);
+		Trace trace = Cat.newTrace(type, name);
+		trace.addData("0", data);
 	}
 
 	private String buildExceptionStack(Throwable exception) {

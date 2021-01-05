@@ -51,19 +51,4 @@ public @interface EnableRocketMQ {
      * 发送的结果如果不是SEND_OK状态，是否当作失败处理而尝试重发，只对同步发送有效
      */
     boolean retryAnotherBrokerWhenNotStoreOK() default false;
-
-    /**
-     * 最小消费线程数.
-     */
-    int consumeThreadMin() default 20;
-
-    /**
-     * 最大消费线程数.
-     */
-    int consumeThreadMax() default 64;
-
-    /**
-     * 最大消费超时时间
-     */
-    long consumeTimeout() default 30000L;
 }
