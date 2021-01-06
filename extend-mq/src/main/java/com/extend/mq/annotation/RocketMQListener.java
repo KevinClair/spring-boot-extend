@@ -16,10 +16,19 @@ import java.lang.annotation.*;
 @Inherited
 public @interface RocketMQListener {
 
+    /**
+     * consumerGroup
+     */
     String consumerGroup() default "";
 
+    /**
+     * tags
+     */
     String tags() default "*";
 
+    /**
+     * topoc
+     */
     String topic() default "";
 
     /**

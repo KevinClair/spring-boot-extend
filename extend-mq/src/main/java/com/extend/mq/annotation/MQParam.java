@@ -17,9 +17,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MQParam {
 
+    /**
+     * MQ消息类型 {@link RocketMQParamNameEnum}
+     * @return
+     */
     RocketMQParamNameEnum name() default RocketMQParamNameEnum.BODY ;
 
+    /**
+     * 序列化类型 {@link RocketMQParamSerializeEnum}
+     * @return
+     */
     RocketMQParamSerializeEnum serialize() default RocketMQParamSerializeEnum.STRING;
 
+    /**
+     * 需要反序列化成的对象信息
+     * @return
+     */
     Class serializeType() default String.class;
 }
