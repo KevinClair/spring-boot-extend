@@ -61,7 +61,6 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
      * @param registry {{@link BeanDefinitionRegistry}}
      */
     private void registerRocketMQListenerInitialization(BeanDefinitionRegistry registry) {
-//        String consumerGroup = EnvironmentManager.getProperty(env, "rocketmq.consumer.consumerGroup", EnvironmentManager.getAppid()+"ConsumerGroup");
         String defaultNameServerAddress = EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress");
 
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RocketMQListenerInitialization.class);
