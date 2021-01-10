@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class PluginConfigManage {
 
-    private static final String PLUGIN_PROPERTIES_CLASSPATH = "classpath*:META-INF/extend/plugin/**";
+    private static final String PLUGIN_PROPERTIES_CLASSPATH = "classpath*:META-INF/extend/**";
     private static final Map<String, Properties> PLUGIN_PROPERTIES_MAP = new HashMap<>();
 
     static {
