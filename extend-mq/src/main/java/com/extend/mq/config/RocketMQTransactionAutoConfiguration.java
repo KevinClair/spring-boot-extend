@@ -3,17 +3,13 @@ package com.extend.mq.config;
 import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.utils.InterceptorUtils;
 import com.extend.mq.template.RocketMQTransactionTemplate;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
@@ -23,8 +19,7 @@ import org.springframework.core.env.Environment;
  * @author KevinClair
  */
 @Slf4j
-@Builder
-public class RocketMQTransactionAutoConfiguration implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
+public class RocketMQTransactionAutoConfiguration implements EnvironmentAware {
 
     private ConfigurableEnvironment env;
     private String nameServerAddress;
@@ -37,14 +32,23 @@ public class RocketMQTransactionAutoConfiguration implements EnvironmentAware, B
     private int compressMsgBodyOverHowmuch;
     private boolean retryAnotherBrokerWhenNotStoreOK;
 
-
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-
+    public RocketMQTransactionAutoConfiguration(ConfigurableEnvironment env, String nameServerAddress, int checkThreadPoolMinSize, int checkThreadPoolMaxSize, int sendMsgTimeOut, int retryTimesWhenSendFailed, int retryTimesWhenSendAsyncFailed, int maxMessageSize, int compressMsgBodyOverHowmuch, boolean retryAnotherBrokerWhenNotStoreOK) {
+        this.nameServerAddress = nameServerAddress;
+        this.checkThreadPoolMinSize = checkThreadPoolMinSize;
+        this.checkThreadPoolMaxSize = checkThreadPoolMaxSize;
+        this.sendMsgTimeOut = sendMsgTimeOut;
+        this.retryTimesWhenSendFailed = retryTimesWhenSendFailed;
+        this.retryTimesWhenSendAsyncFailed = retryTimesWhenSendAsyncFailed;
+        this.maxMessageSize = maxMessageSize;
+        this.compressMsgBodyOverHowmuch = compressMsgBodyOverHowmuch;
+        this.retryAnotherBrokerWhenNotStoreOK = retryAnotherBrokerWhenNotStoreOK;
     }
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public RocketMQTransactionAutoConfiguration() {
+    }
+
+    @Bean
+    public RocketMQTransactionTemplate rocketMQTransactionTemplate() {
         TransactionMQProducer producer = new TransactionMQProducer();
         producer.setProducerGroup(EnvironmentManager.getProperty(env, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid()+"_TRANSACTIONPRODUCERGROUP"));
         producer.setCheckThreadPoolMinSize(checkThreadPoolMinSize);
@@ -70,7 +74,7 @@ public class RocketMQTransactionAutoConfiguration implements EnvironmentAware, B
             log.error("RocketMQ发送端Template模板启动异常，异常信息：{}", ExceptionUtils.getStackTrace(e));
         }
 
-        beanFactory.registerSingleton("rocketmqTransactionTemplate", proxyClass);
+        return proxyClass;
     }
 
     @Override
