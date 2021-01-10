@@ -14,11 +14,10 @@ import org.springframework.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * 事务消息发送模板拦截器
+ * CatRocketMQTransactionProduceInterceptor.
  *
- * @author mingj
- * @date 2020/9/17 12:57
- **/
+ * @author KevinClair
+ */
 @Slf4j
 public class CatRocketMQTransactionProduceInterceptor extends Interceptor {
 

@@ -1,19 +1,14 @@
 package com.extend.log.config;
 
 import com.extend.log.cat.web.CatFilter;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 /**
- * 动态日志/cat过滤器配置类
+ * DynamicLogConfiguration.
  *
- * @author mingj
- * @date 2020/8/14
+ * @author KevinClair
  */
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
 public class DynamicLogConfiguration {
 
     /**
@@ -29,12 +24,10 @@ public class DynamicLogConfiguration {
 //    }
 
     /**
-     * @Description cat的servlet拦截器
-     * @Author mingj
-     * @Date 2020/9/4 0:03
-     * @param
-     * @return org.springframework.boot.web.servlet.FilterRegistrationBean
-     **/
+     * cat的servlet拦截器
+     *
+     * @return {@link FilterRegistrationBean}
+     */
     @Bean
     public FilterRegistrationBean catFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();

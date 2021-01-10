@@ -12,10 +12,9 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 
 /**
- * 应用名过滤器
+ * AppNameAppendFilter.
  *
- * @author mingj
- * @date 2020/9/4
+ * @author KevinClair
  */
 @Activate(group = {CommonConstants.CONSUMER})
 public class AppNameAppendFilter implements Filter {

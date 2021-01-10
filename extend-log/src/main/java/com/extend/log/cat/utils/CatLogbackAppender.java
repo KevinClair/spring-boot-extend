@@ -11,6 +11,11 @@ import com.dianping.cat.message.Trace;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * CatLogbackAppender.
+ *
+ * @author KevinClair
+ */
 public class CatLogbackAppender extends AppenderBase<ILoggingEvent> {
 
 	@Override

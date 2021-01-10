@@ -5,6 +5,7 @@ import com.dianping.cat.message.Message;
 import com.dianping.cat.message.Transaction;
 import com.extend.common.constant.CatEventTypeEnum;
 import com.extend.common.constant.CatTypeEnum;
+import com.extend.common.constant.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.constants.CommonConstants;
@@ -23,10 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Cat的过滤器
+ * CatTransaction.
  *
- * @author mingj
- * @date 2020/9/4
+ * @author KevinClair
  */
 @Activate(group = {CommonConstants.PROVIDER, CommonConstants.CONSUMER},order = -9000)
 public class CatTransaction implements Filter {
@@ -170,7 +170,7 @@ public class CatTransaction implements Filter {
     }
 
     private String getProviderAppName(URL url) {
-        String appName = url.getParameter(CatConstants.PROVIDER_APPLICATION_NAME);
+        String appName = url.getParameter(CommonConstant.PROVIDER_APPLICATION_NAME);
         if (StringUtils.isEmpty(appName)) {
             String interfaceName = url.getParameter(CommonConstants.INTERFACE_KEY);
             appName = interfaceName.substring(0, interfaceName.lastIndexOf('.'));

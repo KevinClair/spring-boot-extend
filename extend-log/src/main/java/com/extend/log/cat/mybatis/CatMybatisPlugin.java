@@ -28,10 +28,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * cat监控Mybatis状态
+ * CatMybatisPlugin.
  *
- * @author mingj
- * @date 2020/9/17
+ * @author KevinClair
  */
 @Intercepts({
         @Signature(method = "query", type = Executor.class, args = {

@@ -16,4 +16,9 @@ public class CommonConstant {
      * langeage files location.
      */
     public static final String LANGUAGE_FILES_LOCATION = "i18n/messages";
+
+    /**
+     * Dubbo provider application name.
+     */
+    public static final String PROVIDER_APPLICATION_NAME="serverApplicationName";
 }

@@ -17,10 +17,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * RocketMQ的消费拦截器，cat记录
+ * CatRocketMQConsumerInterceptor.
  *
- * @author mingj
- * @date 2020/8/14
+ * @author KevinClair
  */
 @Slf4j
 public class CatRocketMQConsumerInterceptor extends Interceptor {

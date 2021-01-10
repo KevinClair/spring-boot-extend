@@ -6,10 +6,9 @@ import ch.qos.logback.core.status.Status;
 import com.extend.core.config.EnvironmentManager;
 
 /**
- * 自定义日志的一些配置信息参数
+ * LogConfigurationProperty.
  *
- * @author mingj
- * @date 2020/8/14
+ * @author KevinClair
  */
 public class LogConfigurationProperty implements PropertyDefiner {
 

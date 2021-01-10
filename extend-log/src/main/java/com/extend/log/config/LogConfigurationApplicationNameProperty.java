@@ -6,10 +6,9 @@ import ch.qos.logback.core.status.Status;
 import com.extend.core.config.EnvironmentManager;
 
 /**
- * 应用名获取
+ * LogConfigurationApplicationNameProperty.
  *
- * @author mingj
- * @date 2020/8/15
+ * @author KevinClair
  */
 public class LogConfigurationApplicationNameProperty implements PropertyDefiner {
     @Override

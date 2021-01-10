@@ -12,11 +12,11 @@ import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
+
 /**
- * RocketMQ发送端拦截器
+ * CatRocketMQProducerInterceptor.
  *
- * @author mingj
- * @date 2020/8/14
+ * @author KevinClair
  */
 @Slf4j
 public class CatRocketMQProducerInterceptor extends Interceptor {

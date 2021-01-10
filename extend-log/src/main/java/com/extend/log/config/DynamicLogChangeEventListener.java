@@ -5,8 +5,6 @@ import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggingSystem;
@@ -15,12 +13,10 @@ import javax.annotation.PostConstruct;
 import java.util.Set;
 
 /**
- * @version 1.0
- * @ClassName DynamicLogChangeEventListener
- * @Description 应用日志级别的动态变更
- * @Author mingj
- * @Date 2019/12/30 17:39
- **/
+ * DynamicLogChangeEventListener.
+ *
+ * @author KevinClair
+ */
 @Slf4j
 public class DynamicLogChangeEventListener {
     private static final String LOGGER_TAG = "logging.level.";

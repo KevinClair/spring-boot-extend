@@ -24,11 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Des
+ * CatFilter.
  *
- * @author mingj
- * @date 2020/9/8 15:50
- **/
+ * @author KevinClair
+ */
 public class CatFilter implements Filter {
     private static Map<MessageFormat, String> s_patterns = new LinkedHashMap<MessageFormat, String>();
 

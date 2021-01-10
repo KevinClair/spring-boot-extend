@@ -29,8 +29,7 @@ public abstract class ConfigurationImportSelector implements ImportSelector {
     enum EnableType {
         ENABLE_MONGODB_CONFIGURATION("EnableMongoDbImportSelector","EnableMongoDbConfiguration"),
         ENABLE_ROCKETMQ_CONFIGURATION("EnableRocketMQImportSelector", "EnableRocketMQ"),
-        ENABLE_ROCKETMQ_TRANSACTION_CONFIGURATION("EnableRocketMQTransactionImportSelector", "EnableRocketMQTransaction"),
-        ENABLE_LOG_CONFIGURATION("EnableLogImportSelector", "EnableLog");
+        ENABLE_ROCKETMQ_TRANSACTION_CONFIGURATION("EnableRocketMQTransactionImportSelector", "EnableRocketMQTransaction");
 
         private final String value;
 

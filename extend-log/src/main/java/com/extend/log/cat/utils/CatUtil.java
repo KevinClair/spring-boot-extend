@@ -5,21 +5,18 @@ import com.dianping.cat.message.Transaction;
 import com.extend.common.exception.BaseException;
 
 /**
- * cat工具，用来判断该异常是否为业务异常
+ * CatUtil.
  *
- * @author mingj
- * @date 2020/9/4
+ * @author KevinClair
  */
 public class CatUtil {
 
     /**
-     * @Description 判断捕获到的异常是否为业务异常，如果是，则不记入cat的异常日志
-     * @Author mingj
-     * @Date 2020/9/4 0:10
-     * @param exception
-     * @param transaction
-     * @return void
-     **/
+     * 判断捕获到的异常是否为业务异常，如果是，则不记入cat的异常日志
+     *
+     * @param exception   捕获到的异常
+     * @param transaction Cat事务
+     */
     public static void processException(Exception exception, Transaction transaction){
         //如果是业务异常，则置为正常状态
         if (BaseException.isBaseException(exception)){

@@ -4,10 +4,9 @@ package com.extend.log.cat.dubbo;
 import com.dianping.cat.Cat;
 
 /**
- * 是否启用Dubbo的cat过滤器
+ * DubboCat.
  *
- * @author mingj
- * @date 2020/9/4
+ * @author KevinClair
  */
 public class DubboCat {
 

@@ -1,7 +1,7 @@
 package com.extend.log.cat.dubbo;
 
 
-import com.alibaba.dubbo.common.Constants;
+import com.extend.common.constant.CommonConstant;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.registry.NotifyListener;
@@ -11,10 +11,9 @@ import org.apache.dubbo.registry.RegistryFactory;
 import java.util.List;
 
 /**
- * RegistryFactory实现类
+ * CatRegistryFactoryWrapper.
  *
- * @author mingj
- * @date 2020/9/4
+ * @author KevinClair
  */
 public class CatRegistryFactoryWrapper implements RegistryFactory {
     private RegistryFactory registryFactory;
@@ -34,7 +33,7 @@ public class CatRegistryFactoryWrapper implements RegistryFactory {
         private URL appendProviderAppName(URL url) {
             String side = url.getParameter(CommonConstants.SIDE_KEY);
             if (CommonConstants.PROVIDER_SIDE.equals(side)) {
-                url = url.addParameter(CatConstants.PROVIDER_APPLICATION_NAME, url.getParameter(CommonConstants.APPLICATION_KEY));
+                url = url.addParameter(CommonConstant.PROVIDER_APPLICATION_NAME, url.getParameter(CommonConstants.APPLICATION_KEY));
             }
             return url;
         }
