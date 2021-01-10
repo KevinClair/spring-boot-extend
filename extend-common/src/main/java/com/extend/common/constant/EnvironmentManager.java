@@ -108,7 +108,7 @@ public class EnvironmentManager {
     //应用相关信息配置
     private static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
     private static final String APP_PROPERTIES_KEY = "app.id";
-    private static final String APP_PROPERTIES_ENV_PATH = "/META-INF/extend/env-%s.properties";
+    private static final String APP_PROPERTIES_ENV_PATH = "/META-INF/extend/config/env-%s.properties";
 
     private static Properties properties;
     private static String appid;
