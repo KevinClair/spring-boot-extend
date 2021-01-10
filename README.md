@@ -60,17 +60,17 @@
 * 取消现有的注解启动的方式
 * Maven工程的代码升级，注释等修改
 * Dubbo模块
-    * 版本升级，调整到Apache Dubbo版本
+    * 版本升级，调整到Apache Dubbo版本(Done)
     * 取消现有的模式，采用和apache-dubbo-springboot类似的模式
 * Mybaitis模块
     * 考虑多数据源下的事务注解的功能性，尽量向Spring原生的事务注解靠齐
     * 正在考虑是否需要接入mybatis-plus
 * RocketMQ模块
-    * 考虑将ConsumerGroup的消费模式可配置化，而不是单一的集群模式
+    * 考虑将ConsumerGroup的消费模式可配置化，而不是单一的集群模式(Done)
 
 ## 未来计划
 * 动态日志变更  **(Done)**
-* DUBBO的SPI扩展 **(已扩展实现Filter过滤器)**
+* DUBBO的SPI扩展 **(已扩展实现Filter过滤器，新增Validation验证器扩展)**
 * RocketMQ模块 **(Done)**
 * 日志模块 **(Done)**
 * 监控模块Cat **(Done)**
