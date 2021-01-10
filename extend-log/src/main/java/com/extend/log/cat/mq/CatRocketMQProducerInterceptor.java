@@ -5,11 +5,12 @@ import com.dianping.cat.Cat;
 import com.dianping.cat.message.Message;
 import com.extend.common.constant.CatEventTypeEnum;
 import com.extend.common.constant.CatTypeEnum;
-import com.extend.common.utils.Interceptor;
+import com.extend.core.utils.Interceptor;
 import com.extend.log.cat.utils.CatUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
+
 import java.lang.reflect.Method;
 /**
  * RocketMQ发送端拦截器

@@ -1,4 +1,4 @@
-package com.extend.common.utils;
+package com.extend.core.utils;
 
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;

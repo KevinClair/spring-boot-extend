@@ -1,7 +1,7 @@
 package com.extend.mybatis.utils;
 
-import com.extend.common.constant.EnvironmentManager;
-import com.extend.common.utils.ConfigurationLoadUtil;
+import com.extend.core.config.EnvironmentManager;
+import com.extend.core.utils.ConfigurationLoadUtil;
 import com.extend.mybatis.properties.MyBatisConfigurationProperties;
 import com.zaxxer.hikari.HikariConfig;
 import org.springframework.core.env.Environment;

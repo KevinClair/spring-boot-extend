@@ -3,7 +3,7 @@ package com.extend.log.config;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.spi.PropertyDefiner;
 import ch.qos.logback.core.status.Status;
-import com.extend.common.constant.EnvironmentManager;
+import com.extend.core.config.EnvironmentManager;
 
 /**
  * 应用名获取

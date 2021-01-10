@@ -1,6 +1,6 @@
 package com.extend.mq.config;
 
-import com.extend.common.config.ConfigurationImportSelector;
+import com.extend.core.config.ConfigurationImportSelector;
 import com.extend.mq.annotation.EnableRocketMQTransaction;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;

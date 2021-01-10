@@ -3,7 +3,7 @@ package com.extend.log.config;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.spi.PropertyDefiner;
 import ch.qos.logback.core.status.Status;
-import com.extend.common.constant.EnvironmentManager;
+import com.extend.core.config.EnvironmentManager;
 
 /**
  * 自定义日志的一些配置信息参数
@@ -15,7 +15,7 @@ public class LogConfigurationProperty implements PropertyDefiner {
 
     @Override
     public String getPropertyValue() {
-        return "/usr/local/application/"+EnvironmentManager.getAppid()+"/logs";
+        return "/usr/local/application/"+ EnvironmentManager.getAppid()+"/logs";
     }
 
     @Override

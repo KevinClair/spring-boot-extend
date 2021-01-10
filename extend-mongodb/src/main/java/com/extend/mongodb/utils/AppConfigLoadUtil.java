@@ -1,7 +1,7 @@
 package com.extend.mongodb.utils;
 
-import com.extend.common.constant.EnvironmentManager;
-import com.extend.common.utils.ConfigurationLoadUtil;
+import com.extend.core.config.EnvironmentManager;
+import com.extend.core.utils.ConfigurationLoadUtil;
 import com.extend.mongodb.properties.MongoDbProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;

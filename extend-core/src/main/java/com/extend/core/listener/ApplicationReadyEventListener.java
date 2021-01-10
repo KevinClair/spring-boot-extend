@@ -1,4 +1,4 @@
-package com.extend.common.listener;
+package com.extend.core.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.extend.common.constant;
+package com.extend.core.config;
 
 import com.extend.common.exception.BaseExceotionEnum;
 import com.extend.common.exception.BaseException;

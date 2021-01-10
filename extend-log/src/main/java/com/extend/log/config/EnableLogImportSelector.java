@@ -1,6 +1,6 @@
 package com.extend.log.config;
 
-import com.extend.common.config.ConfigurationImportSelector;
+import com.extend.core.config.ConfigurationImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**

@@ -1,7 +1,7 @@
 package com.extend.mq.config;
 
-import com.extend.common.constant.EnvironmentManager;
-import com.extend.common.utils.InterceptorUtils;
+import com.extend.core.config.EnvironmentManager;
+import com.extend.core.utils.InterceptorUtils;
 import com.extend.mq.template.RocketMQTransactionTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

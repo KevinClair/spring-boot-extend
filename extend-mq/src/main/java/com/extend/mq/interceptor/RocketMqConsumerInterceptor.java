@@ -1,6 +1,6 @@
 package com.extend.mq.interceptor;
 
-import com.extend.common.utils.Interceptor;
+import com.extend.core.utils.Interceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;

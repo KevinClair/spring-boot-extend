@@ -1,6 +1,6 @@
-package com.extend.common.utils;
+package com.extend.core.utils;
 
-import com.extend.common.config.PluginConfigManage;
+import com.extend.core.config.PluginConfigManage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

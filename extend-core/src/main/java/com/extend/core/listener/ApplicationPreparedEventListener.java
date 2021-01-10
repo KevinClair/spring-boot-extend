@@ -1,10 +1,9 @@
-package com.extend.common.listener;
+package com.extend.core.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.util.StringUtils;
 
 /**
  * ApplicationPreparedEventListener。

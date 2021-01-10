@@ -1,10 +1,10 @@
 package com.extend.mybatis.config;
 
-import com.extend.common.config.PluginConfigManage;
-import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.exception.BaseExceotionEnum;
 import com.extend.common.exception.BaseException;
-import com.extend.common.utils.ConfigurationLoadUtil;
+import com.extend.core.config.EnvironmentManager;
+import com.extend.core.config.PluginConfigManage;
+import com.extend.core.utils.ConfigurationLoadUtil;
 import com.extend.mybatis.properties.MyBatisConfigurationProperties;
 import com.extend.mybatis.utils.MyBatisConfigurationLoadUtil;
 import com.zaxxer.hikari.HikariConfig;
@@ -14,8 +14,6 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -43,7 +41,7 @@ import java.util.Set;
  * @author KevinClair
  */
 @Slf4j
-public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProcessor,EnvironmentAware {
+public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
 
     private ConfigurableEnvironment env;
     private MyBatisConfigurationProperties config;

@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.extend</groupId>
-            <artifactId>extend-common</artifactId>
+            <artifactId>extend-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>

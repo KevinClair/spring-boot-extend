@@ -1,7 +1,5 @@
-package com.extend.common.utils;
+package com.extend.core.utils;
 
-import com.ctrip.framework.apollo.Config;
-import com.ctrip.framework.apollo.ConfigService;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 

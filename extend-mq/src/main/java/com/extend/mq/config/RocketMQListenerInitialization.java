@@ -2,7 +2,7 @@ package com.extend.mq.config;
 
 import com.extend.common.exception.BaseExceotionEnum;
 import com.extend.common.exception.BaseException;
-import com.extend.common.utils.InterceptorUtils;
+import com.extend.core.utils.InterceptorUtils;
 import com.extend.mq.annotation.MQParam;
 import com.extend.mq.annotation.RocketMQListener;
 import lombok.Data;

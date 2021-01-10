@@ -44,6 +44,7 @@
         <module>extend-dubbo</module>
         <module>extend-mq</module>
         <module>extend-log</module>
+        <module>extend-core</module>
     </modules>
 
     <dependencyManagement>
@@ -76,6 +77,11 @@
             <dependency>
                 <groupId>com.extend</groupId>
                 <artifactId>extend-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.extend</groupId>
+                <artifactId>extend-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

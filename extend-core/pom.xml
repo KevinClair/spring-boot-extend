@@ -9,16 +9,22 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>extend-mq</artifactId>
+    <artifactId>extend-core</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.extend</groupId>
-            <artifactId>extend-core</artifactId>
+            <artifactId>extend-common</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.extend.common.config;
+package com.extend.core.config;
 
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
