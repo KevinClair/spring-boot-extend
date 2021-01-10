@@ -3,18 +3,13 @@ package com.extend.mq.config;
 import com.extend.common.constant.EnvironmentManager;
 import com.extend.common.utils.InterceptorUtils;
 import com.extend.mq.template.RocketMQTemplate;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
@@ -24,8 +19,7 @@ import org.springframework.core.env.Environment;
  * @author KevinClair
  */
 @Slf4j
-@Builder
-public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
+public class RocketMQAutoConfiguration implements EnvironmentAware {
 
     private ConfigurableEnvironment env;
     private String nameServerAddress;
@@ -49,27 +43,17 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
     public RocketMQAutoConfiguration() {
     }
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        // 注册RocketMQListenerInitialization
-        registerRocketMQListenerInitialization(registry);
-    }
-
-    /**
-     * 注册RocketMQListenerInitialization
-     *
-     * @param registry {{@link BeanDefinitionRegistry}}
-     */
-    private void registerRocketMQListenerInitialization(BeanDefinitionRegistry registry) {
+    @Bean
+    public RocketMQListenerInitialization rocketMQListenerInitialization(){
         String defaultNameServerAddress = EnvironmentManager.getProperty(env, "rocketmq.nameServerAddress");
 
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RocketMQListenerInitialization.class);
-        builder.addPropertyValue("nameServerAddress", StringUtils.isBlank(nameServerAddress) ? defaultNameServerAddress : nameServerAddress);
-        registry.registerBeanDefinition("rocketMQListenerInitialization", builder.getRawBeanDefinition());
+        RocketMQListenerInitialization rocketMQListenerInitialization = new RocketMQListenerInitialization();
+        rocketMQListenerInitialization.setNameServerAddress(StringUtils.isBlank(nameServerAddress) ? defaultNameServerAddress : nameServerAddress);
+        return rocketMQListenerInitialization;
     }
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    @Bean
+    public RocketMQTemplate rocketMQTemplate() {
         DefaultMQProducer producer = new DefaultMQProducer();
         producer.setProducerGroup(EnvironmentManager.getProperty(env, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_PRODUCERGROUP"));
         producer.setSendMsgTimeout(sendMsgTimeOut);
@@ -93,7 +77,7 @@ public class RocketMQAutoConfiguration implements EnvironmentAware, BeanDefiniti
             log.error("RocketMQ发送端Template模板启动异常，异常信息：{}", ExceptionUtils.getStackTrace(e));
         }
         // 注册消息模板RocketMQTemplate
-        beanFactory.registerSingleton("rocketmqTemplate", proxyClass);
+        return proxyClass;
     }
 
     @Override
