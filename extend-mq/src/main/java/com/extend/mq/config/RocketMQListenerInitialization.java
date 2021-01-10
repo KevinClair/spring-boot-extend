@@ -33,10 +33,6 @@ import java.util.Map;
 public class RocketMQListenerInitialization implements BeanPostProcessor, ApplicationListener<ApplicationReadyEvent> {
 
     private String nameServerAddress;
-    //    private String consumerGroup;
-//    private int threadMax;
-//    private int threadMin;
-//    private long consumeTimeOut;
     private Map<String, RocketMQConfiguration> config = new HashMap<>();
 
     /**
@@ -47,19 +43,9 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (config.size() > 0) {
-//            Map<String, String> topicTags = new HashMap<>();
             for (Map.Entry<String, RocketMQConfiguration> entry : config.entrySet()) {
                 RocketMQConfiguration rocketMQConfiguration = entry.getValue();
                 Map<String, Object> mqInfos = new HashMap<>();
-//                if (topicTags.containsKey(entry.getValue().getTopic())) {
-//                    if ("*".equals(entry.getValue().getTag())) {
-//                        topicTags.put(entry.getValue().getTopic(), entry.getValue().getTag());
-//                    } else {
-//                        topicTags.put(entry.getValue().getTopic(), topicTags.get(entry.getValue().getTopic()) + "||" + entry.getValue().getTag());
-//                    }
-//                } else {
-//                    topicTags.put(entry.getValue().getTopic(), entry.getValue().getTag());
-//                }
                 mqInfos.put("Topic", rocketMQConfiguration.getTopic());
                 mqInfos.put("Tag", rocketMQConfiguration.getTag());
                 mqInfos.put("Consumer", rocketMQConfiguration.getConsumer());
@@ -84,26 +70,6 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
                     log.error("RocketMQ启动异常，异常信息：{}", ExceptionUtils.getStackTrace(ex));
                 }
             }
-//            for (Map.Entry<String, String> e : topicTags.entrySet()) {
-//                try {
-//                    DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerGroup);
-//                    consumer.setNamesrvAddr(nameServerAddress);
-//                    consumer.setConsumeThreadMax(threadMax);
-//                    consumer.setConsumeThreadMin(threadMin);
-//                    consumer.setConsumeTimeout(consumeTimeOut);
-//                    consumer.setMessageModel(MessageModel.CLUSTERING);
-//                    consumer.subscribe(e.getKey(), e.getValue());
-//                    MessageListenerConcurrentlyImpl mqlistener = InterceptorUtils.getProxyClass(MessageListenerConcurrentlyImpl.class, new Class[]{Map.class}, new Object[]{config}, "RocketMQ.consumer");
-//                    consumer.setMessageListener(mqlistener);
-//                    // 启动
-//                    consumer.start();
-//                    log.info("RocketMQ消费端启动成功，消息订阅组信息:{}", consumer.getConsumerGroup());
-//                } catch (MQClientException ex) {
-//                    log.error("RocketMQ订阅消息发生异常，异常信息：{}", ExceptionUtils.getStackTrace(ex));
-//                } catch (Exception ex) {
-//                    log.error("RocketMQ启动异常，异常信息：{}", ExceptionUtils.getStackTrace(ex));
-//                }
-//            }
         }
     }
 
