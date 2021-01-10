@@ -1,9 +1,13 @@
 package com.extend.mq.annotation;
 
-import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * RocketMQListener，消息监听。
@@ -47,7 +51,7 @@ public @interface RocketMQListener {
     long consumeTimeout() default 30000L;
 
     /**
-     * Control message mode, if you want all subscribers receive message all message, broadcasting is a good choice.
+     * 消费模式 {@link MessageModel}
      */
     MessageModel messageModel() default MessageModel.CLUSTERING;
 }
