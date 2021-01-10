@@ -16,18 +16,16 @@ public class EnableRocketMQTransactionImportSelector extends ConfigurationImport
     public String[] importSelect(AnnotationMetadata importingClassMetadata) {
         AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableRocketMQTransaction.class.getName()));
 
-        RocketMQTransactionAutoConfiguration configuration = RocketMQTransactionAutoConfiguration.builder()
-                .nameServerAddress(annotationAttributes.getString("nameServerAddress"))
-                .sendMsgTimeOut(annotationAttributes.getNumber("sendMsgTimeOut"))
-                .retryTimesWhenSendFailed(annotationAttributes.getNumber("retryTimesWhenSendFailed"))
-                .retryTimesWhenSendAsyncFailed(annotationAttributes.getNumber("retryTimesWhenSendAsyncFailed"))
-                .maxMessageSize(annotationAttributes.getNumber("maxMessageSize"))
-                .compressMsgBodyOverHowmuch(annotationAttributes.getNumber("compressMsgBodyOverHowmuch"))
-                .retryAnotherBrokerWhenNotStoreOK(annotationAttributes.getBoolean("retryAnotherBrokerWhenNotStoreOK"))
-                .checkThreadPoolMaxSize(annotationAttributes.getNumber("checkThreadPoolMaxSize"))
-                .checkThreadPoolMinSize(annotationAttributes.getNumber("checkThreadPoolMinSize"))
-                .build();
-
+        RocketMQTransactionAutoConfiguration configuration = new RocketMQTransactionAutoConfiguration(null,
+                annotationAttributes.getString("nameServerAddress"),
+                annotationAttributes.getNumber("checkThreadPoolMinSize"),
+                annotationAttributes.getNumber("checkThreadPoolMaxSize"),
+                annotationAttributes.getNumber("sendMsgTimeOut"),
+                annotationAttributes.getNumber("retryTimesWhenSendFailed"),
+                annotationAttributes.getNumber("retryTimesWhenSendAsyncFailed"),
+                annotationAttributes.getNumber("maxMessageSize") ,
+                annotationAttributes.getNumber("compressMsgBodyOverHowmuch"),
+                annotationAttributes.getBoolean("retryAnotherBrokerWhenNotStoreOK"));
         return new String[]{configuration.getClass().getName()};
     }
 }
