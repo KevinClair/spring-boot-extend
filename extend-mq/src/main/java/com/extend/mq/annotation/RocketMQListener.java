@@ -23,7 +23,7 @@ public @interface RocketMQListener {
     /**
      * consumerGroup
      */
-    String consumerGroup() default "";
+    String consumerGroup();
 
     /**
      * tags
@@ -31,9 +31,9 @@ public @interface RocketMQListener {
     String tags() default "*";
 
     /**
-     * topoc
+     * topic
      */
-    String topic() default "";
+    String topic();
 
     /**
      * 最小消费线程数.
