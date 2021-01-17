@@ -26,7 +26,7 @@ public class ConfigurationLoadUtil {
     public static String getProperty(Environment env, String key){
         String property = env.getProperty(key);
         if (StringUtils.isEmpty(env.getProperty(key))){
-            return "";
+            return null;
         }
         return property;
     }

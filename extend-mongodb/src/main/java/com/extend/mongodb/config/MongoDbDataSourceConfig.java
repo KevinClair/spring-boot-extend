@@ -5,8 +5,7 @@ import com.extend.core.utils.ConfigurationLoadUtil;
 import com.extend.mongodb.properties.MongoDbProperties;
 import com.extend.mongodb.utils.MongoDbConfigurationLoadUtil;
 import com.mongodb.MongoClientURI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -23,15 +22,12 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /**
- * @version 1.0
- * @ClassName MongodbDataSourceConfig
- * @Description mongodb数据源加载配置
- * @Author mingj
- * @Date 2019/4/14 16:53
- **/
+ * MongoDbDataSourceConfig.
+ *
+ * @author KevinClair
+ */
+@Slf4j
 public class MongoDbDataSourceConfig implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
-
-    private static Logger logger = LoggerFactory.getLogger(MongoDbDataSourceConfig.class);
 
     private ConfigurableEnvironment env;
     private List<MongoDbProperties> configs;
@@ -68,12 +64,12 @@ public class MongoDbDataSourceConfig implements BeanDefinitionRegistryPostProces
     }
 
     /**
-    *@Description 注册Bean
-    *@Param [beanFactory, config]
-    *@Author mingj
-    *@Date 2019/4/14 19:13
-    *@Return void
-    **/
+     * 注册mongodb工厂
+     *
+     * @param beanFactory
+     * @param config       mongodb配置属性 {@link MongoDbProperties}
+     * @param flag         MongoDB模板名称
+     */
     private void registerBean(BeanDefinitionRegistry beanFactory, MongoDbProperties config, Boolean flag) {
         MongoClientURI mongoClientURI = MongoDbConfigurationLoadUtil.convertConfig(config);
 
@@ -84,12 +80,12 @@ public class MongoDbDataSourceConfig implements BeanDefinitionRegistryPostProces
     }
 
     /**
-    *@Description 注册mongodbTemplate
-    *@Param [beanFactory, factorySourceName, templateSourceName]
-    *@Author mingj
-    *@Date 2019/4/16 14:18
-    *@Return void
-    **/
+     * 注册模板
+     *
+     * @param beanFactory
+     * @param factorySourceName  工厂名
+     * @param templateSourceName 模板资源名
+     */
     private void registerMongodbTemplateBeanDefinitionBuilder(BeanDefinitionRegistry beanFactory, String factorySourceName, String templateSourceName) {
         //注册MongodbTemplate模板
         BeanDefinition beanDefinition = beanFactory.getBeanDefinition(factorySourceName);
@@ -105,6 +101,13 @@ public class MongoDbDataSourceConfig implements BeanDefinitionRegistryPostProces
     *@Date 2019/4/16 14:16
     *@Return void
     **/
+    /**
+     * 注册mongodbFactory
+     *
+     * @param beanFactory
+     * @param mongoClientURI    客户端url
+     * @param factorySourceName 工厂资源名
+     */
     private void registerMongodbFactoryBeanDefinitionBuilder(BeanDefinitionRegistry beanFactory, MongoClientURI mongoClientURI, String factorySourceName) {
         //注册Mongodb工厂
         BeanDefinitionBuilder dataSourceDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SimpleMongoClientDbFactory.class);

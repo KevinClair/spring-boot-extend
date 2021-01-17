@@ -5,8 +5,7 @@ import com.extend.core.utils.ConfigurationLoadUtil;
 import com.extend.mongodb.properties.MongoDbProperties;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
@@ -15,20 +14,23 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @version 1.0
- * @ClassName MongodbConfigLoadUtil
- * @Description mongodb数据源加载配置工具类
- * @Author mingj
- * @Date 2019/4/14 17:03
- **/
+ * MongoDbConfigurationLoadUtil.
+ *
+ * @author KevinClair
+ */
+@Slf4j
 public class MongoDbConfigurationLoadUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(MongoDbConfigurationLoadUtil.class);
 
     public static MongoDbProperties loadSingleMongodbConfigFrom(Environment env) {
         return AppConfigLoadUtil.loadMongoDbConfig(env);
     }
 
+    /**
+     * 加载配置信息
+     *
+     * @param env 环境信息
+     * @return {@link MongoDbProperties}
+     */
     public static List<MongoDbProperties> loadMultipleMongodbConfigFrom(Environment env) {
         HashMap<String, MongoDbProperties> configsMap = new HashMap<>();
         int index = 0;
@@ -48,7 +50,12 @@ public class MongoDbConfigurationLoadUtil {
         return new ArrayList<>(configsMap.values());
     }
 
-
+    /**
+     * 属性转换
+     *
+     * @param config 配置属性
+     * @return {@linl MongoClientURI}
+     */
     public static MongoClientURI convertConfig(MongoDbProperties config) {
         MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
         builder.minConnectionsPerHost(config.getMinConnectionsPerHost());
@@ -61,6 +68,5 @@ public class MongoDbConfigurationLoadUtil {
         builder.socketKeepAlive(config.isSocketKeepAlive());
         builder.serverSelectionTimeout(config.getServerSelectionTimeout());
         return new MongoClientURI(config.getMongodbUri(), builder);
-
     }
 }

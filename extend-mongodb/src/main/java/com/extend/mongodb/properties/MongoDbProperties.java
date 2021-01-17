@@ -1,12 +1,10 @@
 package com.extend.mongodb.properties;
 
 /**
- * @version 1.0
- * @ClassName MongoDBProperties
- * @Description mongodb数据源配置基础信息
- * @Author mingj
- * @Date 2019/4/14 17:00
- **/
+ * MongoDbProperties.
+ *
+ * @author KevinClair
+ */
 public class MongoDbProperties {
 
     /** 连接资源名称*/
