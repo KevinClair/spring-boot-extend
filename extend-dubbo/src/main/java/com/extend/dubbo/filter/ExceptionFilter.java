@@ -76,7 +76,7 @@ public class ExceptionFilter implements Filter, Filter.Listener {
                 // directly throw if it's BaseException or ValidationException
                 if (exception instanceof BaseException) {
                     String message = MessageResourcesManage.getMessage(RpcContext.getContext().getAttachment(CommonConstant.LANGUAGE), exception.getMessage());
-                    appResponse.setException(new BaseException(((BaseException) exception).getCode(), org.apache.commons.lang3.StringUtils.isBlank(message) ? exception.getMessage() : message, ((BaseException) exception).getStatus()));
+                    appResponse.setException(new BaseException(((BaseException) exception).getCode(), StringUtils.isBlank(message) ? exception.getMessage() : message, ((BaseException) exception).getStatus()));
                     return;
                 }
 
