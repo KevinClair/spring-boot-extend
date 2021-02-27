@@ -14,6 +14,22 @@
     <description>This is an extension project based on spring boot</description>
     <packaging>pom</packaging>
 
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/KevinClair/spring-boot-extend/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>KevinClair</id>
+            <name>KevinClair</name>
+            <email>704714211@qq.com</email>
+            <roles>
+                <role>author</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <java.version>1.8</java.version>
         <lombok.version>1.18.10</lombok.version>
