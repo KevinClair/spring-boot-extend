@@ -72,4 +72,6 @@
 * Redis模块 
 * seata分布式事务
 * canal消息订阅集成 **(Done)**
+* web模块的支持
+* 工具类扩展
 
