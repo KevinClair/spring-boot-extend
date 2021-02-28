@@ -47,8 +47,6 @@ public class MyBatisAutoConfiguration implements BeanDefinitionRegistryPostProce
     private MyBatisConfigurationProperties config;
     private List<MyBatisConfigurationProperties> configs;
 
-
-
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanFactory) throws BeansException {
         //1.初始化配置参数
