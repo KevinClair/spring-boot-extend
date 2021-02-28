@@ -1,10 +1,13 @@
 package com.extend.mongodb.properties;
 
+import lombok.Data;
+
 /**
  * MongoDbProperties.
  *
  * @author KevinClair
  */
+@Data
 public class MongoDbProperties {
 
     /** 连接资源名称*/
@@ -41,132 +44,4 @@ public class MongoDbProperties {
     /**设置服务器选择超时（以毫秒为单位），它定义驱动程序在抛出异常之前等待服务器选择成功的时间
      * 值为0表示如果没有可用的服务器，它将立即超时。 负值意味着无限期等待*/
     private Integer serverSelectionTimeout;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getRepositoriesEnabled() {
-        return repositoriesEnabled;
-    }
-
-    public void setRepositoriesEnabled(Boolean repositoriesEnabled) {
-        this.repositoriesEnabled = repositoriesEnabled;
-    }
-
-    public String getRepositoriesAuthenticationDatabase() {
-        return repositoriesAuthenticationDatabase;
-    }
-
-    public void setRepositoriesAuthenticationDatabase(String repositoriesAuthenticationDatabase) {
-        this.repositoriesAuthenticationDatabase = repositoriesAuthenticationDatabase;
-    }
-
-    public String getMongodbUri() {
-        return mongodbUri;
-    }
-
-    public void setMongodbUri(String mongodbUri) {
-        this.mongodbUri = mongodbUri;
-    }
-
-    public String getMongoDBDataSourceName() {
-        return mongoDBDataSourceName;
-    }
-
-    public void setMongoDBDataSourceName(String mongoDBDataSourceName) {
-        this.mongoDBDataSourceName = mongoDBDataSourceName;
-    }
-
-    public Integer getMinConnectionsPerHost() {
-        return minConnectionsPerHost;
-    }
-
-    public void setMinConnectionsPerHost(Integer minConnectionsPerHost) {
-        this.minConnectionsPerHost = minConnectionsPerHost;
-    }
-
-    public Integer getConnectionsPerHost() {
-        return connectionsPerHost;
-    }
-
-    public void setConnectionsPerHost(Integer connectionsPerHost) {
-        this.connectionsPerHost = connectionsPerHost;
-    }
-
-    public Integer getConnectTimeout() {
-        return connectTimeout;
-    }
-
-    public void setConnectTimeout(Integer connectTimeout) {
-        this.connectTimeout = connectTimeout;
-    }
-
-    public Integer getThreadsAllowedToBlockForConnectionMultiplier() {
-        return threadsAllowedToBlockForConnectionMultiplier;
-    }
-
-    public void setThreadsAllowedToBlockForConnectionMultiplier(Integer threadsAllowedToBlockForConnectionMultiplier) {
-        this.threadsAllowedToBlockForConnectionMultiplier = threadsAllowedToBlockForConnectionMultiplier;
-    }
-
-    public Integer getMaxConnectionIdleTime() {
-        return maxConnectionIdleTime;
-    }
-
-    public void setMaxConnectionIdleTime(Integer maxConnectionIdleTime) {
-        this.maxConnectionIdleTime = maxConnectionIdleTime;
-    }
-
-    public Integer getMaxConnectionLifeTime() {
-        return maxConnectionLifeTime;
-    }
-
-    public void setMaxConnectionLifeTime(Integer maxConnectionLifeTime) {
-        this.maxConnectionLifeTime = maxConnectionLifeTime;
-    }
-
-    public Integer getSocketTimeout() {
-        return socketTimeout;
-    }
-
-    public void setSocketTimeout(Integer socketTimeout) {
-        this.socketTimeout = socketTimeout;
-    }
-
-    public Integer getMaxWaitTime() {
-        return maxWaitTime;
-    }
-
-    public void setMaxWaitTime(Integer maxWaitTime) {
-        this.maxWaitTime = maxWaitTime;
-    }
-
-    public boolean isSocketKeepAlive() {
-        return socketKeepAlive;
-    }
-
-    public void setSocketKeepAlive(boolean socketKeepAlive) {
-        this.socketKeepAlive = socketKeepAlive;
-    }
-
-    public Integer getServerSelectionTimeout() {
-        return serverSelectionTimeout;
-    }
-
-    public void setServerSelectionTimeout(Integer serverSelectionTimeout) {
-        this.serverSelectionTimeout = serverSelectionTimeout;
-    }
-
-    public String getRepositoriesLocations() {
-        return repositoriesLocations;
-    }
-
-    public void setRepositoriesLocations(String repositoriesLocations) {
-        this.repositoriesLocations = repositoriesLocations;
-    }
 }
