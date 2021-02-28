@@ -60,6 +60,8 @@
         <module>extend-mq</module>
         <module>extend-log</module>
         <module>extend-core</module>
+        <module>extend-web</module>
+        <module>extend-cache</module>
     </modules>
 
     <dependencyManagement>
