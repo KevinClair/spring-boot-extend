@@ -7,7 +7,10 @@ import com.extend.mq.annotation.MQParam;
 import com.extend.mq.annotation.RocketMQListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.rocketmq.acl.common.AclClientRPCHook;
+import org.apache.rocketmq.acl.common.SessionCredentials;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
@@ -33,6 +36,8 @@ import java.util.Map;
 public class RocketMQListenerInitialization implements BeanPostProcessor, ApplicationListener<ApplicationReadyEvent> {
 
     private String nameServerAddress;
+    private String accessKey;
+    private String secretKey;
     private Map<String, RocketMQConfiguration> config = new HashMap<>();
 
     /**
@@ -52,7 +57,12 @@ public class RocketMQListenerInitialization implements BeanPostProcessor, Applic
                 mqInfos.put("MessageModel", rocketMQConfiguration.getMessageModel());
                 log.info("RocketMQ消费消息topic列表[{}]", mqInfos);
                 try {
-                    DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(rocketMQConfiguration.getConsumer());
+                    DefaultMQPushConsumer consumer = null;
+                    if (StringUtils.isNotBlank(accessKey) && StringUtils.isNotBlank(secretKey)) {
+                        consumer = new DefaultMQPushConsumer(null, rocketMQConfiguration.getConsumer(), new AclClientRPCHook(new SessionCredentials(accessKey, secretKey)));
+                    } else {
+                        consumer = new DefaultMQPushConsumer(rocketMQConfiguration.getConsumer());
+                    }
                     consumer.setNamesrvAddr(nameServerAddress);
                     consumer.setConsumeThreadMax(rocketMQConfiguration.getConsumeThreadMax());
                     consumer.setConsumeThreadMin(rocketMQConfiguration.getConsumeThreadMin());

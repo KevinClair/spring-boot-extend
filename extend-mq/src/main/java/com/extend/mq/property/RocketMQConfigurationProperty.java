@@ -16,6 +16,16 @@ public class RocketMQConfigurationProperty {
     private String nameServerAddress;
 
     /**
+     * accessKey
+     */
+    private String accessKey;
+
+    /**
+     * secretKey
+     */
+    private String secretKey;
+
+    /**
      * 发送消息超时时间
      */
     private int sendMsgTimeOut = 3000;

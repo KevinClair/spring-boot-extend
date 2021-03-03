@@ -9,6 +9,8 @@ import com.extend.mq.template.RocketMQTransactionTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.rocketmq.acl.common.AclClientRPCHook;
+import org.apache.rocketmq.acl.common.SessionCredentials;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -48,7 +50,12 @@ public class RocketMQBeanConfiguration implements EnvironmentAware {
 
     @Bean
     public RocketMQTemplate rocketMQTemplate(RocketMQConfigurationProperty property) {
-        DefaultMQProducer producer = new DefaultMQProducer();
+        DefaultMQProducer producer = null;
+        if (StringUtils.isNotBlank(property.getAccessKey()) && StringUtils.isNotBlank(property.getSecretKey())) {
+            producer = new DefaultMQProducer(new AclClientRPCHook(new SessionCredentials(property.getAccessKey(), property.getSecretKey())));
+        } else {
+            producer = new DefaultMQProducer();
+        }
         producer.setProducerGroup(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_PRODUCERGROUP"));
         producer.setSendMsgTimeout(property.getSendMsgTimeOut());
         producer.setNamesrvAddr(StringUtils.isBlank(property.getNameServerAddress()) ? EnvironmentManager.getProperty(environment, "rocketmq.nameServerAddress") : property.getNameServerAddress());
@@ -76,8 +83,12 @@ public class RocketMQBeanConfiguration implements EnvironmentAware {
 
     @Bean
     public RocketMQTransactionTemplate rocketMQTransactionTemplate(RocketMQConfigurationProperty property) {
-        TransactionMQProducer producer = new TransactionMQProducer();
-        producer.setProducerGroup(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_TRANSACTIONPRODUCERGROUP"));
+        TransactionMQProducer producer = null;
+        if (StringUtils.isNotBlank(property.getAccessKey()) && StringUtils.isNotBlank(property.getSecretKey())) {
+            producer = new TransactionMQProducer(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_TRANSACTIONPRODUCERGROUP"), new AclClientRPCHook(new SessionCredentials(property.getAccessKey(), property.getSecretKey())));
+        } else {
+            producer = new TransactionMQProducer(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_TRANSACTIONPRODUCERGROUP"));
+        }
         producer.setCheckThreadPoolMinSize(property.getCheckThreadPoolMinSize());
         producer.setCheckThreadPoolMaxSize(property.getCheckThreadPoolMaxSize());
         producer.setSendMsgTimeout(property.getSendMsgTimeOut());
