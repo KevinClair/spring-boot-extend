@@ -5,7 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 
 /**
- * TODO
+ * 本地缓存工厂
  *
  * @author KevinClair
  */
