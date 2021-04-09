@@ -57,8 +57,9 @@
 
 ## 最近计划
 最近准备开始着手做一次项目的重构和升级，调整一下项目的模块以及工程架构；
-* Redis模块对接，CacheManager对接；
+* Redis模块对接，CacheManager对接;
 * web模块支持；
+* 接入zookeeper组件；
 
 ## 未来计划
 * 动态日志变更  **(Done)**
