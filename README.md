@@ -3,6 +3,13 @@
 ![issues](https://img.shields.io/github/issues/KevinClair/spring-boot-extend)
 ![forks](https://img.shields.io/github/forks/KevinClair/spring-boot-extend)
 ![liscense](https://img.shields.io/github/license/KevinClair/spring-boot-extend)
+![RocketMQ](https://img.shields.io/badge/MQ-RocketMQ-brightgreen)
+![Dubbo](https://img.shields.io/badge/Rpc-Dubbo-brightgreen)
+![Apollo](https://img.shields.io/badge/Config-Apollo-brightgreen)
+![Spring](https://img.shields.io/badge/Framework-Spring-brightgreen)
+![Mybatis](https://img.shields.io/badge/ORM-Mybatis-brightgreen)
+![Cat](https://img.shields.io/badge/APM-cat-brightgreen)
+
 ## 背景
 个人开发在项目中因为比较多的使用了多个数据库数据源，以往的做法是在spring-boot的基础上通过新建配置类来实现多数据源的操作，而且在事务操作上不是很友好，并且如果多个项目都使用到的话，每个项目都得写一套，很繁琐，因此自己做了一个可以快速集成多数据源的工具。后面又集成了apollo配置中心，还可以动态部署配置参数，非常简便快捷，同时集成了Dubbo，也可以实现分布式服务。
 
