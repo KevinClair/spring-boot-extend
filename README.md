@@ -3,11 +3,11 @@
 ![issues](https://img.shields.io/github/issues/KevinClair/spring-boot-extend)
 ![forks](https://img.shields.io/github/forks/KevinClair/spring-boot-extend)
 ![liscense](https://img.shields.io/github/license/KevinClair/spring-boot-extend)
-![RocketMQ](https://img.shields.io/badge/MQ-RocketMQ-brightgreen)
+![RocketMQ](https://img.shields.io/badge/MQ-RocketMQ-9cf)
 ![Dubbo](https://img.shields.io/badge/Rpc-Dubbo-green)
 ![Apollo](https://img.shields.io/badge/Config-Apollo-yellow)
 ![Spring](https://img.shields.io/badge/Framework-Spring-yellowgreen)
-![Mybatis](https://img.shields.io/badge/ORM-Mybatis-origin)
+![Mybatis](https://img.shields.io/badge/ORM-Mybatis-blue)
 ![Cat](https://img.shields.io/badge/APM-cat-red)
 
 ## 背景
