@@ -21,6 +21,9 @@ public class CaffeineLocalCacheFactory {
                 }
             });
 
+    private CaffeineLocalCacheFactory() {
+    }
+
     /**
      * 获取实例
      *
