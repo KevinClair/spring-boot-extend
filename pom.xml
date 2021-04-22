@@ -50,6 +50,7 @@
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
         <cat-client.version>3.0.0</cat-client.version>
         <foundation-service.version>4.0.4</foundation-service.version>
+        <curator.version>2.7.1</curator.version>
     </properties>
 
     <modules>
@@ -211,6 +212,12 @@
                 <groupId>org.unidal.framework</groupId>
                 <artifactId>foundation-service</artifactId>
                 <version>${foundation-service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
