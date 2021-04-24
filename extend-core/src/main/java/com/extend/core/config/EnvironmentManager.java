@@ -1,16 +1,5 @@
 package com.extend.core.config;
 
-import com.extend.common.exception.BaseExceotionEnum;
-import com.extend.common.exception.BaseException;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.util.StringUtils;
-
-import java.io.IOException;
-import java.util.Properties;
-
 /**
  * EnvironmentManager 环境参数配置。
  *
@@ -106,99 +95,14 @@ public class EnvironmentManager {
     public static final Boolean MONGODB_DEFAULT_CONFIG_REPOSITORIESENABLED = true;
 
     //应用相关信息配置
-    private static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
     private static final String APP_PROPERTIES_KEY = "app.id";
-    private static final String APP_PROPERTIES_ENV_PATH = "/META-INF/extend/config/env-%s.properties";
-
-    private static Properties properties;
-    private static String appid;
-
-    //加载环境配置参数
-    static {
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            properties = new Properties();
-            Resource resource = resolver.getResource(String.format(APP_PROPERTIES_ENV_PATH, getEnv()));
-            properties.load(resource.getInputStream());
-        } catch (IOException e) {
-            throw new BaseException(e, BaseExceotionEnum.RESOURCE_LOAD_ERROR.getCode(), BaseExceotionEnum.RESOURCE_LOAD_ERROR.getMessage(), BaseExceotionEnum.RESOURCE_LOAD_ERROR.getStatus());
-        }
-
-    }
-
-    //加载appid
-    static {
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            Resource resource = resolver.getResource(APP_PROPERTIES_CLASSPATH);
-            properties.load(resource.getInputStream());
-            appid = properties.getProperty(APP_PROPERTIES_KEY);
-            if (StringUtils.isEmpty(appid)){
-                throw new IllegalArgumentException("Configuration parameter app.id not detected,Please check app.properties!");
-            }
-        } catch (IOException e) {
-            throw new BaseException(e, BaseExceotionEnum.RESOURCE_LOAD_ERROR.getCode(), BaseExceotionEnum.RESOURCE_LOAD_ERROR.getMessage(), BaseExceotionEnum.RESOURCE_LOAD_ERROR.getStatus());
-        }
-    }
-
-    /**
-     *  设置属性
-     *
-     * @param key   属性key
-     * @param value 属性value
-     */
-    public static void setProperty(String key, String value) {
-        properties.setProperty(key, value);
-    }
-
-    /**
-     * 获取属性配置
-     *
-     * @param env 环境信息
-     * @param key 属性key
-     * @return {{@link String}}
-     */
-    public static String getProperty(ConfigurableEnvironment env, String key) {
-        String property = env.getProperty(key);
-        if (!StringUtils.isEmpty(property)){
-            return property;
-        }
-        return properties.getProperty(key);
-    }
-
-    /**
-     * 获取属性
-     *
-     * @param env          环境信息
-     * @param key          属性key
-     * @param defaultValue 默认值
-     * @return {{@link String}}
-     */
-    public static String getProperty(ConfigurableEnvironment env, String key, String defaultValue) {
-        String value = getProperty(env, key);
-        if (StringUtils.isEmpty(value)){
-            return defaultValue;
-        }
-        return value;
-    }
-
-    /**
-     * 获取当前环境信息
-     *
-     * @return {{@link String}}
-     */
-    private static String getEnv() {
-        final String env = System.getProperty("env");
-        return env == null ? "dev" : env;
-    }
 
     /**
      * 获取appid信息
      *
      * @return {{@link String}}
      */
-    public static String getAppid() {
-        String property = System.getProperty(APP_PROPERTIES_KEY);
-        return !StringUtils.isEmpty(property)?property:appid;
+    public static String getAppId() {
+        return System.getProperty(APP_PROPERTIES_KEY);
     }
 }
