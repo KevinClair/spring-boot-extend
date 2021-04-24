@@ -14,7 +14,7 @@ public class LogConfigurationProperty implements PropertyDefiner {
 
     @Override
     public String getPropertyValue() {
-        return "/usr/local/application/"+ EnvironmentManager.getAppid()+"/logs";
+        return "/usr/local/application/"+ EnvironmentManager.getAppId()+"/logs";
     }
 
     @Override

@@ -13,7 +13,7 @@ import com.extend.core.config.EnvironmentManager;
 public class LogConfigurationApplicationNameProperty implements PropertyDefiner {
     @Override
     public String getPropertyValue() {
-        return EnvironmentManager.getAppid();
+        return EnvironmentManager.getAppId();
     }
 
     @Override
