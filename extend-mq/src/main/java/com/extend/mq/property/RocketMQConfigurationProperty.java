@@ -58,10 +58,22 @@ public class RocketMQConfigurationProperty {
     /**
      * 事务回查监听器最小线程数
      */
-    private int checkThreadPoolMinSize = 1;
+    private int checkThreadPoolCoreSize = 1;
 
     /**
      * 事务回查监听器最大线程数
      */
     private int checkThreadPoolMaxSize = 1;
+
+    /**
+     * 生产者组
+     */
+    private String producerGroup;
+
+    /**
+     * 消费者组
+     */
+    private String consumerGroup;
+
+
 }
