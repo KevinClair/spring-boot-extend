@@ -1,5 +1,6 @@
 package com.extend.mq;
 
+import com.extend.common.utils.ExtendThreadFactory;
 import com.extend.core.config.EnvironmentManager;
 import com.extend.core.utils.InterceptorUtils;
 import com.extend.mq.config.RocketMQListenerInitialization;
@@ -15,12 +16,17 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * RocketMQ的Bean管理注入
@@ -29,26 +35,31 @@ import org.springframework.core.env.Environment;
  */
 @Slf4j
 @ConditionalOnClass(value = {DefaultMQProducer.class, DefaultMQPushConsumer.class})
-public class RocketMQBeanConfiguration implements EnvironmentAware {
+public class RocketMQBeanConfiguration {
 
     private ConfigurableEnvironment environment;
 
+    public RocketMQBeanConfiguration(ConfigurableEnvironment environment) {
+        this.environment = environment;
+    }
+
     @Bean
     @ConfigurationProperties(prefix = "extend.mq")
+    @ConditionalOnProperty(value = "extend.mq.nameServerAddress")
     public RocketMQConfigurationProperty rocketMQConfigurationProperty() {
         return new RocketMQConfigurationProperty();
     }
 
     @Bean
+    @ConditionalOnBean(value = {RocketMQConfigurationProperty.class})
     public RocketMQListenerInitialization rocketMQListenerInitialization(RocketMQConfigurationProperty property) {
-        String defaultNameServerAddress = EnvironmentManager.getProperty(environment, "rocketmq.nameServerAddress");
-
         RocketMQListenerInitialization rocketMQListenerInitialization = new RocketMQListenerInitialization();
-        rocketMQListenerInitialization.setNameServerAddress(StringUtils.isBlank(property.getNameServerAddress()) ? defaultNameServerAddress : property.getNameServerAddress());
+        rocketMQListenerInitialization.setNameServerAddress(property.getNameServerAddress());
         return rocketMQListenerInitialization;
     }
 
     @Bean
+    @ConditionalOnBean(value = {RocketMQConfigurationProperty.class})
     public RocketMQTemplate rocketMQTemplate(RocketMQConfigurationProperty property) {
         DefaultMQProducer producer = null;
         if (StringUtils.isNotBlank(property.getAccessKey()) && StringUtils.isNotBlank(property.getSecretKey())) {
@@ -56,9 +67,9 @@ public class RocketMQBeanConfiguration implements EnvironmentAware {
         } else {
             producer = new DefaultMQProducer();
         }
-        producer.setProducerGroup(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_PRODUCERGROUP"));
+        producer.setProducerGroup(StringUtils.isBlank(property.getProducerGroup()) ? (EnvironmentManager.getAppId() + "_PRODUCERGROUP") : property.getProducerGroup());
         producer.setSendMsgTimeout(property.getSendMsgTimeOut());
-        producer.setNamesrvAddr(StringUtils.isBlank(property.getNameServerAddress()) ? EnvironmentManager.getProperty(environment, "rocketmq.nameServerAddress") : property.getNameServerAddress());
+        producer.setNamesrvAddr(property.getNameServerAddress());
         producer.setRetryTimesWhenSendFailed(property.getRetryTimesWhenSendFailed());
         producer.setRetryTimesWhenSendAsyncFailed(property.getRetryTimesWhenSendAsyncFailed());
         producer.setMaxMessageSize(property.getMaxMessageSize());
@@ -82,22 +93,25 @@ public class RocketMQBeanConfiguration implements EnvironmentAware {
     }
 
     @Bean
+    @ConditionalOnBean(value = {RocketMQConfigurationProperty.class})
     public RocketMQTransactionTemplate rocketMQTransactionTemplate(RocketMQConfigurationProperty property) {
         TransactionMQProducer producer = null;
         if (StringUtils.isNotBlank(property.getAccessKey()) && StringUtils.isNotBlank(property.getSecretKey())) {
-            producer = new TransactionMQProducer(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_TRANSACTIONPRODUCERGROUP"), new AclClientRPCHook(new SessionCredentials(property.getAccessKey(), property.getSecretKey())));
+            producer = new TransactionMQProducer(StringUtils.isBlank(property.getProducerGroup()) ? (EnvironmentManager.getAppId() + "_PRODUCERGROUP") : property.getProducerGroup(), new AclClientRPCHook(new SessionCredentials(property.getAccessKey(), property.getSecretKey())));
         } else {
-            producer = new TransactionMQProducer(EnvironmentManager.getProperty(environment, "rocketmq.producer.producerGroup", EnvironmentManager.getAppid() + "_TRANSACTIONPRODUCERGROUP"));
+            producer = new TransactionMQProducer(StringUtils.isBlank(property.getProducerGroup()) ? (EnvironmentManager.getAppId() + "_PRODUCERGROUP") : property.getProducerGroup());
         }
-        producer.setCheckThreadPoolMinSize(property.getCheckThreadPoolMinSize());
-        producer.setCheckThreadPoolMaxSize(property.getCheckThreadPoolMaxSize());
         producer.setSendMsgTimeout(property.getSendMsgTimeOut());
-        producer.setNamesrvAddr(StringUtils.isEmpty(property.getNameServerAddress()) ? EnvironmentManager.getProperty(environment, "rocketmq.nameServerAddress") : property.getNameServerAddress());
+        producer.setNamesrvAddr(property.getNameServerAddress());
         producer.setRetryTimesWhenSendFailed(property.getRetryTimesWhenSendFailed());
         producer.setRetryTimesWhenSendAsyncFailed(property.getRetryTimesWhenSendAsyncFailed());
         producer.setMaxMessageSize(property.getMaxMessageSize());
         producer.setCompressMsgBodyOverHowmuch(property.getCompressMsgBodyOverHowmuch());
         producer.setRetryAnotherBrokerWhenNotStoreOK(property.isRetryAnotherBrokerWhenNotStoreOK());
+
+        // 设置事务消息回查线程
+        ExecutorService executorService = new ThreadPoolExecutor(property.getCheckThreadPoolCoreSize(), property.getMaxMessageSize(), 3000, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(), new ExtendThreadFactory("TransactionMQ"));
+        producer.setExecutorService(executorService);
 
         //begin the producer
         try {
@@ -113,10 +127,5 @@ public class RocketMQBeanConfiguration implements EnvironmentAware {
         }
 
         return proxyClass;
-    }
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.environment = (ConfigurableEnvironment) environment;
     }
 }
