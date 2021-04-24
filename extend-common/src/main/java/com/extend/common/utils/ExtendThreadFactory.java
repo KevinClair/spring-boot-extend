@@ -19,7 +19,8 @@ public class ExtendThreadFactory implements ThreadFactory {
     private final AtomicInteger threadNumber = new AtomicInteger(1);
     private final String namePrefix;
 
-    ExtendThreadFactory(String name) {
+
+    public ExtendThreadFactory(String name) {
 
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
