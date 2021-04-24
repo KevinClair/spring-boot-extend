@@ -1,0 +1,3 @@
+extend:
+  mq:
+    nameServerAddress: localhost:9876
