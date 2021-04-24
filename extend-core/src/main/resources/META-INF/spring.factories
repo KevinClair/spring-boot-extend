@@ -4,5 +4,3 @@ org.springframework.context.ApplicationListener=com.extend.core.listener.Applica
   com.extend.core.listener.ApplicationReadyEventListener,\
   com.extend.core.listener.ApplicationStartedEventListener,\
   com.extend.core.listener.ApplicationCloseEventListener
-
-org.springframework.boot.autoconfigure.EnableAutoConfiguration = com.extend.core.config.TestConfiguration
