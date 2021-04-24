@@ -21,6 +21,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.extend</groupId>
+            <artifactId>extend-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
