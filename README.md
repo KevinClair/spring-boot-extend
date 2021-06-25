@@ -46,7 +46,7 @@
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
-* Email: mingjay0601@163.com
+* Email: kevinclair@apache.org
 * QQ: 704714211
 
 ## 感激
