@@ -74,6 +74,4 @@ public class RocketMQConfigurationProperty {
      * 消费者组
      */
     private String consumerGroup;
-
-
 }
